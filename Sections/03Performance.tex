@@ -1,0 +1,54 @@
+\section{Performance Management}
+\label{sec:performance}
+
+To evaluate the operational performance of the FermaCore line and compare improvement scenarios, we established four distinct Key Performance Indicators (KPIs). These metrics are designed to be independent, avoiding overlapping measurements, and are strictly defined using the S.M.A.R.T. framework to directly address management's objectives.
+
+\begin{table}[H]
+\centering
+\caption{Performance metrics and S.M.A.R.T. justification.}
+\label{tab:kpis}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabularx}{\textwidth}{@{} >{\raggedright\arraybackslash}p{4cm} X @{}}
+\toprule
+\rowcolor{black!5} 
+\textbf{Key Performance Indicator} & \multicolumn{1}{c}{\textbf{S.M.A.R.T}} \\
+\midrule
+
+\textbf{Weekly throughput}\newline
+\textcolor{gray}{\small \textit{Headline metric}} & 
+\textcolor{red!70!black}{\textbf{S:}} Tracks the exact number of completed batches exiting the packaging lines. \newline
+\textcolor{orange!80!black}{\textbf{M:}} Counted discretely at the sink block using the \texttt{batchesShipped} variable. \newline
+\textcolor{green!60!black}{\textbf{A:}} The baseline establishes current limits, making subsequent improvements realistic. \newline
+\textcolor{blue!70!black}{\textbf{R:}} Directly answers the core objective regarding maximum output before capital expansion. \newline
+\textcolor{purple!70!black}{\textbf{T:}} Measured uniformly over a standard 168-hour production week. \\
+\midrule
+
+\textbf{Station utilisation}\newline
+\textcolor{gray}{\small \textit{Headline metric}} & 
+\textcolor{red!70!black}{\textbf{S:}} Evaluates individual constraints (drying unit, packaging lines, cleaning team). \newline
+\textcolor{orange!80!black}{\textbf{M:}} Calculated as total busy hours divided by total available simulation hours. \newline
+\textcolor{green!60!black}{\textbf{A:}} Native output generated accurately by AnyLogic resource pools. \newline
+\textcolor{blue!70!black}{\textbf{R:}} Locates the bottleneck and verifies if improvements merely shift it to another station. \newline
+\textcolor{purple!70!black}{\textbf{T:}} Tracked continuously across the designated simulation run length. \\
+\midrule
+
+\textbf{Batch flow time}\newline
+\textcolor{gray}{\small \textit{Headline metric}} & 
+\textcolor{red!70!black}{\textbf{S:}} Tracks the exact duration from premix start to packaging completion for each batch. \newline
+\textcolor{orange!80!black}{\textbf{M:}} Recorded using the \texttt{totalFlowTime} and \texttt{maxFlowTime} variables. \newline
+\textcolor{green!60!black}{\textbf{A:}} AnyLogic natively logs the entry and exit times of each batch agent. \newline
+\textcolor{blue!70!black}{\textbf{R:}} Ensures production meets the operational constraint of $\le$ 1-day deviation from the plan. \newline
+\textcolor{purple!70!black}{\textbf{T:}} Measured continuously for each completed batch during the simulation. \\
+\midrule
+
+\textbf{System yield rate}\newline
+\textcolor{gray}{\small \textit{Secondary metric}} & 
+\textcolor{red!70!black}{\textbf{S:}} Focuses purely on material efficiency and tablet loss. \newline
+\textcolor{orange!80!black}{\textbf{M:}} Tracks \texttt{batchesScrapped} and final \texttt{tablets} count relative to the starting volume. \newline
+\textcolor{green!60!black}{\textbf{A:}} Calculated by subtracting scrap events at premix, compression, and packaging. \newline
+\textcolor{blue!70!black}{\textbf{R:}} Evaluates if the Industry 4.0 scenario (reducing press scrap) translates to higher final output. \newline
+\textcolor{purple!70!black}{\textbf{T:}} Calculated cumulatively at the end of the steady-state simulation period. \\
+
+\bottomrule
+\end{tabularx}
+\end{table}
