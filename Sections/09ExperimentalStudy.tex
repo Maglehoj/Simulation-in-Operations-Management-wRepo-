@@ -61,7 +61,7 @@ C: Packaging capacity     & 3 lines  & 4 lines \\
 
 Each effect is the difference between the four high-corner means and the four
 low-corner means; its standard error is pooled from the within-corner variance
-across all eight corners ($\mathrm{SE}=334$ bottles, $\mathrm{df}=152$), so each
+across all eight corners ($\mathrm{SE}=346$ bottles, $\mathrm{df}=152$), so each
 effect carries a significance test.
 
 \begin{table}[H]
@@ -73,13 +73,13 @@ magnitude. $|t|>1.99$ is significant at \SI{95}{\percent}.}
 \toprule
 Effect & Estimate (bottles) & $t$ & Significant \\
 \midrule
-\textbf{C: packaging line} & \textbf{$+717$} & \textbf{2.15} & \textbf{yes} \\
-ABC                        & $+474$ & 1.42  & no \\
-AC                         & $+273$ & 0.82  & no \\
-B: cleaning team           & $-245$ & $-0.74$ & no \\
-AB                         & $+152$ & 0.46  & no \\
-A: dryer                   & $-140$ & $-0.42$ & no \\
-BC                         & $+130$ & 0.39  & no \\
+\textbf{BC: clean $\times$ packaging} & \textbf{$+700$} & \textbf{2.02} & \textbf{yes} \\
+AB                         & $-478$ & $-1.38$ & no \\
+C: packaging line          & $-473$ & $-1.37$ & no \\
+AC                         & $+467$ & 1.35  & no \\
+A: dryer                   & $+425$ & 1.23  & no \\
+ABC                        & $-308$ & $-0.89$ & no \\
+B: cleaning team           & $+80$  & 0.23  & no \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -87,22 +87,24 @@ BC                         & $+130$ & 0.39  & no \\
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.55\textwidth]{fig_doe.pdf}
-\caption{Pareto of $2^3$ effects on throughput. Only the packaging-line main
-effect crosses the \SI{95}{\percent} significance threshold.}
+\caption{Pareto of $2^3$ effects on throughput. No main effect is significant;
+only the cleaning-team$\times$packaging interaction (BC) marginally crosses the
+\SI{95}{\percent} threshold.}
 \label{fig:doe}
 \end{figure}
 
-Table~\ref{tab:doe} and the Pareto in Figure~\ref{fig:doe} show that only one of
-the seven effects is significant: a fourth packaging line lifts throughput by
-717 bottles ($+\SI{1.2}{\percent}$). Adding a dryer or a
-cleaning-team member, and every interaction, sits inside the noise band and
-cannot be distinguished from zero. The point estimates for A and B are even
-slightly negative, which is a sampling artefact rather than a real loss; the
-correct reading is that drying and cleaning capacity do not change \emph{shipped
-output} at all. This is the central result the OFAT design would have hidden,
-and it holds because output is fixed by the 50-batch plan and per-batch yield
-(Sec.~\ref{sec:demand40}), not by station capacity. Adding capacity moves the
-bottleneck (Sec.~\ref{sec:btshift}) but not the throughput.
+Table~\ref{tab:doe} and the Pareto in Figure~\ref{fig:doe} show that \emph{no
+main effect} is significant: adding a dryer, a cleaning-team member or a
+packaging line each sits inside the noise band and cannot be distinguished from
+zero. The only effect to cross the threshold is the cleaning-team$\times$packaging
+interaction (BC, $+700$ bottles, $t=2.02$), and only marginally. With seven
+effects tested at the \SI{5}{\percent} level, one borderline crossing is the
+expected rate of a false positive, so we read it as a multiple-comparison
+artefact rather than a real synergy. The central result, which the OFAT design
+would have hidden, is that no single capacity lever and no robust combination
+changes \emph{shipped output}, because output is fixed by the 50-batch plan and
+per-batch yield (Sec.~\ref{sec:demand40}), not by station capacity. Adding
+capacity moves the bottleneck (Sec.~\ref{sec:btshift}) but not the throughput.
 
 \subsection{Results: throughput across scenarios}
 \label{sec:expresults}
@@ -110,8 +112,8 @@ Figure~\ref{fig:expresults} compares weekly throughput across the scenario set
 with \SI{95}{\percent} confidence intervals. Almost every bar overlaps the
 baseline: neither the capacity levers nor the demand sweep moves shipped output.
 The one clear exception is Industry~4.0 (press scrap $10\rightarrow\SI{4}{\percent}$),
-which lifts throughput by 4{,}764 bottles ($+\SI{7.8}{\percent}$,
-95\% CI $[3{,}479,\,6{,}050]$), the only intervention whose interval
+which lifts throughput by 3{,}551 bottles ($+\SI{5.8}{\percent}$,
+95\% CI $[2{,}206,\,4{,}896]$), the only intervention whose interval
 clears the baseline by a wide margin.
 
 \begin{figure}[H]
@@ -123,9 +125,9 @@ Industry~4.0 (green) is the only scenario that separates from the baseline.}
 \end{figure}
 
 \paragraph{Queue discipline.} Switching the dryer queue from FIFO to EDD or SPT
-(\texttt{queueStrategy}~$=1,2$) leaves throughput within noise of the baseline
-($+\SI{0.6}{\percent}$ and $+\SI{0.8}{\percent}$, both inside the
-\SI{95}{\percent} CI). Drying times are near-homogeneous
+(\texttt{queueStrategy}~$=1,2$) leaves throughput at or below the baseline
+(EDD $-\SI{1.2}{\percent}$, SPT $-\SI{2.4}{\percent}$); neither improves output,
+consistent with throughput being plan-capped. Drying times are near-homogeneous
 ($\sigma\approx\SI{0.39}{\hour}$, Sec.~\ref{sec:input}), so reordering a queue of
 similar jobs cannot meaningfully change flow, so sequencing is not a lever here.
 
@@ -144,10 +146,10 @@ bottleneck moves from drying to the cleaning team, while throughput stays flat.}
 \toprule
 Scenario & Drying & Clean team & Packaging & Throughput \\
 \midrule
-Baseline              & \textbf{94.9} & 79.6 & 52.2 & 60{,}972 \\
-$+1$ dryer            & 77.1 & \textbf{94.8} & 72.6 & 60{,}880 \\
-$+1$ dryer, $+$clean team & 60.6 & \textbf{92.9} & 92.5 & 60{,}183 \\
-Best combination ($+$dryer, $+$clean, $+$pack) & 76.1 & \textbf{93.0} & 76.8 & 61{,}776 \\
+Baseline              & \textbf{94.9} & 81.0 & 53.0 & 61{,}761 \\
+$+1$ dryer            & 77.7 & \textbf{95.0} & 73.0 & 61{,}890 \\
+$+1$ dryer, $+$clean team & 60.9 & \textbf{93.1} & 92.8 & 61{,}099 \\
+Best combination ($+$dryer, $+$clean, $+$pack) & 76.3 & \textbf{93.0} & 77.1 & 61{,}485 \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -162,11 +164,11 @@ shifts rather than clears.}
 \end{figure}
 
 Drying binds at baseline (\SI{94.9}{\percent}). A second dryer relieves it
-(\SI{77.1}{\percent}) but immediately loads the cleaning team to
-\SI{94.8}{\percent}, because each dryer carries a 2-hour clean that draws on the
+(\SI{77.7}{\percent}) but immediately loads the cleaning team to
+\SI{95.0}{\percent}, because each dryer carries a 2-hour clean that draws on the
 same shared team. Adding a cleaning-team member then splits the load between the
 team and packaging, both near \SI{93}{\percent}. Throughput never follows: it
-holds at 60{,}000--62{,}000 bottles across all four configurations. This is
+holds at 61{,}000--62{,}000 bottles across all four configurations. This is
 the bottleneck-shifting pattern: capacity relocates the
 constraint but cannot raise output, because output is plan- and yield-limited,
 not capacity-limited.
@@ -191,19 +193,19 @@ violations.}
 \toprule
 Demand & Throughput & Mean flow time (h) & Avg WIP & Release viol. \\
 \midrule
-$\times$1.0 (baseline) & 60{,}972 & 180.0 & 19.5 & 0 \\
-$\times$1.25           & 60{,}435 & 188.5 & 20.5 & 0 \\
-$\times$1.5            & 61{,}058 & 197.2 & 21.5 & 0 \\
-$\times$2.0            & 60{,}890 & 203.9 & 22.3 & 0 \\
+$\times$1.0 (baseline) & 61{,}761 & 182.3 & 19.8 & 0 \\
+$\times$1.25           & 60{,}542 & 189.0 & 20.6 & 0 \\
+$\times$1.5            & 59{,}970 & 193.9 & 21.1 & 0 \\
+$\times$2.0            & 60{,}682 & 203.1 & 22.2 & 0 \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
 Throughput stays flat at $\approx61{,}000$ bottles across the whole sweep,
 confirming that shipped volume is set by the plan and yield, not by demand. What
-does change is congestion: at $\times2.0$ mean flow time rises \SI{13}{\percent}
-(\SI{180}{\hour}$\rightarrow$\SI{204}{\hour}) and average WIP rises
-\SI{14}{\percent} (19.5$\rightarrow$22.3). Release violations stay at zero
+does change is congestion: at $\times2.0$ mean flow time rises \SI{11}{\percent}
+(\SI{182}{\hour}$\rightarrow$\SI{203}{\hour}) and average WIP rises
+\SI{12}{\percent} (19.8$\rightarrow$22.2). Release violations stay at zero
 throughout, so the line absorbs a doubled-pace schedule without breaching the
 one-day release constraint. Drying remains the binding
 resource (\SI{95}{\percent}); it is the station that would constrain any genuine
@@ -213,11 +215,11 @@ saturation first.
 \paragraph{Industry 4.0: the only lever that raises output.}
 Reducing press scrap from \SI{10}{\percent} to \SI{4}{\percent} raises good
 tablets per batch, and because output is bounded by batches $\times$ yield, this
-is the one intervention that lifts \emph{shipped} throughput: 65{,}736 vs.\
-60{,}972 bottles, a gain of \textbf{4{,}764 bottles per run}
-($+\SI{7.8}{\percent}$, 95\% CI $[3{,}479,\,6{,}050]$). The gain is more
-than six times the only significant capacity effect (a fourth packaging line,
-717 bottles) and requires no added line capacity.
+is the one intervention that lifts \emph{shipped} throughput: 65{,}313 vs.\
+61{,}761 bottles, a gain of \textbf{3{,}551 bottles per run}
+($+\SI{5.8}{\percent}$, 95\% CI $[2{,}206,\,4{,}896]$). It is the only lever
+that significantly raises shipped output, where no capacity lever does, and it
+requires no added line capacity.
 
 \subsection{Managerial value: benefit vs.\ effort}
 \label{sec:value}
@@ -230,16 +232,17 @@ $=$ not statistically significant at \SI{95}{\percent} (within the noise band).}
 \toprule
 Lever & $\Delta$ throughput & Implementation effort / cost \\
 \midrule
-Resequence (group by product) & $-0.6\%$ (n.s.) & Free: scheduling change only \\
-$+1$ cleaning team            & $-0.1\%$ (n.s.) & Low: additional shift / hire \\
-$+1$ dryer                    & $-0.1\%$ (n.s.) & Medium: equipment, moderate lead time \\
-$+1$ packaging line           & $+1.3\%$        & High: capex, long lead time (the 2030 plan defers this) \\
-\textbf{Industry 4.0 (scrap $10\rightarrow\SI{4}{\percent}$)} & \textbf{$+7.8\%$} & Low: one-off press-sensor retrofit, no recurring cost \\
+Resequence (group by product) & $-0.7\%$ (n.s.) & Free: scheduling change only \\
+$+1$ cleaning team            & $+0.1\%$ (n.s.) & Low: additional shift / hire \\
+$+1$ dryer                    & $+0.7\%$ (n.s.) & Medium: equipment, moderate lead time \\
+$+1$ packaging line           & $-0.8\%$ (n.s.) & High: capex, long lead time (the 2030 plan defers this) \\
+\textbf{Industry 4.0 (scrap $10\rightarrow\SI{4}{\percent}$)} & \textbf{$+5.8\%$} & Low: one-off press-sensor retrofit, no recurring cost \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-Only two levers move throughput at all, and the press-sensor retrofit delivers
-six times the gain of the packaging line at a fraction of the capital cost. The three capacity levers that dominate the 2030
-plan's intuition (more dryers, more cleaning staff, resequencing) return nothing
-measurable on output; they buy flow-time and bottleneck relief, not volume.
+Only one lever moves throughput at all: the press-sensor retrofit ($+\SI{5.8}{\percent}$),
+at a fraction of the capital cost of any line investment. The capacity levers that
+dominate the 2030 plan's intuition (more dryers, more cleaning staff, more
+packaging, resequencing) return nothing measurable on output; they buy flow-time
+and bottleneck relief, not volume.

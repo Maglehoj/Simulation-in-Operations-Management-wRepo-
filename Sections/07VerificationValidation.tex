@@ -19,8 +19,8 @@ For validation we compare the model against analytic expectations. Drying carrie
 the largest required machine-hours over the plan (about \SI{300}{h},
 Table~\ref{tab:capacity}), so it should be the binding constraint, ahead of the
 cleaning team and packaging. The simulated baseline utilisation confirms this
-ordering: drying \SI{94.9}{\percent}, cleaning team \SI{79.6}{\percent} and
-packaging \SI{52.2}{\percent}. The per-station mean processing times also
+ordering: drying \SI{94.9}{\percent}, cleaning team \SI{81.0}{\percent} and
+packaging \SI{53.0}{\percent}. The per-station mean processing times also
 reproduce the input distributions they were drawn from. The one free modelling
 choice, namely how leftover tablets that cannot complete a bottle are rounded
 down, was fixed so that the baseline yield and throughput stay internally
@@ -35,10 +35,10 @@ consistent before we ran the experiments.
 \toprule
 Check & Expected & Simulated (baseline) & OK \\
 \midrule
-Batch conservation   & in $=$ shipped $+$ scrapped $=50$ & $46.9 + 3.1 = 50.0$ & \checkmark \\
+Batch conservation   & in $=$ shipped $+$ scrapped $=50$ & $47.5 + 2.5 = 50.0$ & \checkmark \\
 Primary constraint   & drying (largest unit-h)           & drying \SI{94.9}{\percent} util & \checkmark \\
-Constraint ordering  & drying $>$ clean $>$ packaging     & $94.9 > 79.6 > 52.2$ & \checkmark \\
-Little's Law         & $\overline{\text{WIP}} \approx \lambda\overline{W}$ & $19.36$ vs.\ $19.53$ (\SI{0.9}{\percent}) & \checkmark \\
+Constraint ordering  & drying $>$ clean $>$ packaging     & $94.9 > 81.0 > 53.0$ & \checkmark \\
+Little's Law         & $\overline{\text{WIP}} \approx \lambda\overline{W}$ & $19.64$ vs.\ $19.77$ (\SI{0.7}{\percent}) & \checkmark \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -83,9 +83,9 @@ $\text{WIP} = \lambda \cdot W$, linking our three flow KPIs:
 \end{equation}
 where $\overline{W}$ is mean flow time. The throughput rate is taken
 \emph{independently} of the WIP and flow-time statistics, from the shipped-batch
-count over the makespan: $\lambda = 46.9/436.2 = 0.1075$ batches/h. With
-$\overline{W}=\SI{180.0}{\hour}$ this
-predicts $\lambda\overline{W}=19.36$ batches, against a directly measured
-$\overline{\text{WIP}}=19.53$ batches, a \SI{0.9}{\percent} discrepancy that is
+count over the makespan: $\lambda = 47.5/440.6 = 0.1077$ batches/h. With
+$\overline{W}=\SI{182.3}{\hour}$ this
+predicts $\lambda\overline{W}=19.64$ batches, against a directly measured
+$\overline{\text{WIP}}=19.77$ batches, a \SI{0.7}{\percent} discrepancy that is
 well within sampling error. The three flow KPIs are therefore mutually
 consistent, which confirms that the model conserves work.

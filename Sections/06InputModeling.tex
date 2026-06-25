@@ -19,7 +19,7 @@ $p$-value and the exact AnyLogic call (repair times in hours).}
 \toprule
 \textbf{Quantity} & \textbf{Distribution} & \textbf{Fitted parameters} & \textbf{AnyLogic call} \\
 \midrule
-Drying time (h/batch), $n{=}300$      & Triangular & min $2.703$, max $5.541$, mode $3.749$ (mean $4.00$) & \texttt{triangular(2.703493,} \texttt{5.541093, 3.748756)} \\
+Drying time (h/batch), $n{=}300$      & Normal & mean $4.00$, std $0.39$ (KS $p=0.92$) & \texttt{normal(0.39, 4.0)} \\
 Premix repair (h), $n{=}500$          & Lognormal  & mean $0.80$, std $2.09$ (KS $p=0.24$) & \texttt{lognormal(0.803, 2.086)} \\
 Packaging repair (h), $n{=}1000$      & Lognormal  & mean $5.01$, std $7.67$ (KS $p=0.66$) & \texttt{lognormal(5.009, 7.671)} \\
 \bottomrule
@@ -27,13 +27,13 @@ Packaging repair (h), $n{=}1000$      & Lognormal  & mean $5.01$, std $7.67$ (KS
 \end{table}
 
 \paragraph{Drying-time fit.} The drying observations are symmetric about a mean
-of \SI{4.00}{h} (skewness $\approx 0$). The model implements a triangular
-distribution that reproduces the empirical mean and the full observed range
-$[2.703,5.541]$~h; a \texttt{Normal}$(4.00,0.39)$ gives a closer fit to the
-symmetric shape (Fig.~\ref{fig:fits}, KS $p=0.92$). Because drying is the
-bottleneck, throughput is driven by the \emph{mean}, which is identical for both, so
-the choice is immaterial to throughput, while the triangular gives a
-conservative (wider) variance for the flow-time and WIP measures.
+of \SI{4.00}{h} (skewness $\approx 0$). The model implements a
+\texttt{Normal}$(4.00,0.39)$ distribution, which gives the closest fit to the
+symmetric shape (Fig.~\ref{fig:fits}, KS $p=0.92$) and clearly outperforms a
+triangular over the observed range $[2.703,5.541]$~h. Because drying is the
+bottleneck, throughput is driven by the \emph{mean} (\SI{4.00}{h}); the fitted
+mean lies more than ten standard deviations above zero, so the rare possibility
+of a non-positive Normal sample is immaterial in practice.
 
 \paragraph{Given distributions (not fitted).}
 Premix new Triangular(3.5,4.0,4.5) h; premix old Triangular(4.5,5.5,6.5) h;
@@ -58,7 +58,7 @@ Weibull($\beta{=}2.5,\alpha{=}1.5$) days; premix new Weibull($\beta{=}3.5,\alpha
 \end{subfigure}
 \caption{Distribution-fitter output for the three fitted quantities: empirical
 histogram with the fitted density overlaid (KS $p$-values in Table~\ref{tab:fits}).
-For drying, the Normal fit (KS $p=0.92$) is shown solid and the implemented
-triangular dashed.}
+For drying, the implemented Normal fit (KS $p=0.92$) is overlaid on the
+histogram.}
 \label{fig:fits}
 \end{figure}
