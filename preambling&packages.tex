@@ -1,26 +1,26 @@
 %% Fonts and Typography
 \usepackage{beramono}
 \usepackage{titlesec}
-% SECTION: sans, bold, large, with thin rule underneath
+% SECTION: bold, compact
 \titleformat{\section}
-  {\huge\bfseries}
-  {\thesection}{0.8em}{}
-
-\titlespacing*{\section}{0pt}{1.2\baselineskip}{0.9\baselineskip}
-
-% SUBSECTION: sans, bold, no rule
-\titleformat{\subsection}
-  {\Large\bfseries}
-  {\thesubsection}{0.8em}{}
-
-\titlespacing*{\subsection}{0pt}{1.0\baselineskip}{0.7\baselineskip}
-
-% SUBSUBSECTION: sans, bold, no rule
-\titleformat{\subsubsection}
   {\large\bfseries}
-  {\thesubsubsection}{0.8em}{}
+  {\thesection}{0.6em}{}
 
-\titlespacing*{\subsubsection}{0pt}{0.85\baselineskip}{0.5\baselineskip}
+\titlespacing*{\section}{0pt}{0.9\baselineskip}{0.4\baselineskip}
+
+% SUBSECTION: bold, compact
+\titleformat{\subsection}
+  {\normalsize\bfseries}
+  {\thesubsection}{0.6em}{}
+
+\titlespacing*{\subsection}{0pt}{0.6\baselineskip}{0.3\baselineskip}
+
+% SUBSUBSECTION: bold italic, compact
+\titleformat{\subsubsection}
+  {\small\bfseries\itshape}
+  {\thesubsubsection}{0.6em}{}
+
+\titlespacing*{\subsubsection}{0pt}{0.5\baselineskip}{0.2\baselineskip}
 \usepackage{amsmath, amssymb}
 \usepackage{setspace}
 
