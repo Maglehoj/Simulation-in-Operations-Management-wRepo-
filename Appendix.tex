@@ -9,3 +9,23 @@
 % - Full distribution-fit screenshots (histogram + overlay + KS).
 % - Full factorial results table.
 % - AnyLogic block-level screenshots.
+
+\subsection*{Software artefacts}
+
+\textbf{AnyLogic model.} \texttt{FermaCore\_Replication\_Harness\_Brams\_testV2.0.alp}
+is the model used for every result. It implements the full process flow
+(Sec.~\ref{sec:conceptual}), press scrap and a selectable dryer-queue rule
+(\texttt{queueStrategy}), machine downtime on the blenders and packaging lines,
+and a Parameter-Variation experiment (\texttt{ReplicationsExp}) that runs $n=20$
+replications and writes one KPI row per replication to CSV. A scenario is run by
+setting the \texttt{Main} parameters (e.g.\ \texttt{numDryers},
+\texttt{cleaningTeamCapacity}, \texttt{demandMultiplier}, \texttt{pressScrapRate})
+and re-running the experiment.
+
+\textbf{Analysis scripts (Python).}
+\begin{itemize}\setlength\itemsep{0pt}
+  \item \texttt{halfwidth\_analysis.py}: replication sizing (half-width method, required $n$ per KPI) for one scenario CSV.
+  \item \texttt{scenario\_comparison.py}: cross-scenario KPI table with \SI{95}{\percent} CIs, two-sample significance versus baseline, and the $2^3$ factorial effects.
+  \item \texttt{make\_figures.py}: builds the throughput, utilisation and DOE-Pareto figures from \texttt{test\_data/}.
+  \item \texttt{make\_fit\_figures.py}: builds the three input-distribution fit figures from \texttt{FermaCore\_input\_data.xlsx}.
+\end{itemize}

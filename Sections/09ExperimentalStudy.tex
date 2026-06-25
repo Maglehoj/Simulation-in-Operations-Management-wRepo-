@@ -201,25 +201,32 @@ $\times$2.0            & 60{,}682 & 203.1 & 22.2 & 0 \\
 \end{tabularx}
 \end{table}
 
-Throughput stays flat at $\approx61{,}000$ bottles across the whole sweep,
-confirming that shipped volume is set by the plan and yield, not by demand. What
-does change is congestion: at $\times2.0$ mean flow time rises \SI{11}{\percent}
+Throughput stays flat at $\approx61{,}000$ bottles across the sweep, but for a
+plan-fixed run that alone is expected. The informative result is that the
+\emph{makespan barely moves} (\SI{440.6}{h} at $\times1.0$ versus \SI{433.6}{h}
+at $\times2.0$): doubling the arrival rate does not let the line finish sooner,
+which shows the dryer caps the \emph{completion rate} independently of the plan
+size, and not merely the batch count. The compressed load is instead absorbed as
+congestion: at $\times2.0$ mean flow time rises \SI{11}{\percent}
 (\SI{182}{\hour}$\rightarrow$\SI{203}{\hour}) and average WIP rises
-\SI{12}{\percent} (19.8$\rightarrow$22.2). Release violations stay at zero
-throughout, so the line absorbs a doubled-pace schedule without breaching the
-one-day release constraint. Drying remains the binding
-resource (\SI{95}{\percent}); it is the station that would constrain any genuine
-\emph{volume} growth, since lifting the batch count would push it past
-saturation first.
+\SI{12}{\percent} (19.8$\rightarrow$22.2), while release violations stay at zero,
+so the line still honours the one-day rule at a doubled pace. We model the 2030
+increase as schedule compression; a direct volume-scaling experiment would
+quantify the exact sustainable ceiling, but the rate ceiling is already visible
+here, and drying (\SI{95}{\percent}) is the station that would bind first if the
+batch count itself grew.
 
-\paragraph{Industry 4.0: the only lever that raises output.}
-Reducing press scrap from \SI{10}{\percent} to \SI{4}{\percent} raises good
-tablets per batch, and because output is bounded by batches $\times$ yield, this
-is the one intervention that lifts \emph{shipped} throughput: 65{,}313 vs.\
-61{,}761 bottles, a gain of \textbf{3{,}551 bottles per run}
-($+\SI{5.8}{\percent}$, 95\% CI $[2{,}206,\,4{,}896]$). It is the only lever
+\paragraph{Industry 4.0: predictive maintenance at the press.}
+The scenario models condition-based (predictive) maintenance: real-time sensors
+monitor press force and filling depth and flag the drift before the press leaves
+specification, so a developing fault is corrected before it scraps tablets rather
+than after. The QA estimate is that this cuts press scrap from \SI{10}{\percent}
+to \SI{4}{\percent}. Because output is bounded by batches $\times$ yield, raising
+good tablets per batch is the one intervention that lifts \emph{shipped}
+throughput: 65{,}313 vs.\ 61{,}761 bottles, a gain of \textbf{3{,}551 bottles per
+run} ($+\SI{5.8}{\percent}$, 95\% CI $[2{,}206,\,4{,}896]$). It is the only lever
 that significantly raises shipped output, where no capacity lever does, and it
-requires no added line capacity.
+needs only the sensor retrofit, not added line capacity.
 
 \subsection{Managerial value: benefit vs.\ effort}
 \label{sec:value}
