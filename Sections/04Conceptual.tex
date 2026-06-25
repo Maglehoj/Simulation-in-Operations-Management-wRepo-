@@ -56,12 +56,6 @@ failure or pre-packaging inspection scraps material.}
 \label{sec:activity}
 \begin{figure}[H]
 \centering
-\tikzset{
-  % seize = striped half-moon, release = solid half-moon (both outlined)
-  seizehm/.pic={\fill[pattern=north east lines] (-1.7mm,0) -- (1.7mm,0) arc (0:-180:1.7mm) -- cycle;
-                \draw[line width=0.3pt] (-1.7mm,0) -- (1.7mm,0) arc (0:-180:1.7mm) -- cycle;},
-  relhm/.pic={\fill[black!40] (-1.7mm,0) -- (1.7mm,0) arc (0:-180:1.7mm) -- cycle;
-              \draw[line width=0.3pt] (-1.7mm,0) -- (1.7mm,0) arc (0:-180:1.7mm) -- cycle;}}
 \resizebox{\textwidth}{!}{%
 \begin{tikzpicture}[
   >=Stealth, font=\scriptsize,
@@ -70,7 +64,8 @@ failure or pre-packaging inspection scraps material.}
   rs/.style={circle, draw, fill=black!8, align=center, minimum size=8mm, inner sep=0.3pt, font=\tiny},
   dc/.style={diamond, draw, aspect=1.5, align=center, inner sep=0.5pt, font=\tiny},
   fl/.style={->, thick},
-  sr/.style={densely dotted, gray!60}]
+  % seize = resource->activity, release = activity->resource (two curved dotted lines)
+  sz/.style={densely dotted, gray!55, -{Stealth}, shorten >=1pt, shorten <=1pt}]
 
 % ---- Row 1: create, premix (old/new split), failure check, granulation ----
 \node (create) at (0,0) {\itshape Create};
@@ -90,9 +85,9 @@ failure or pre-packaging inspection scraps material.}
 \draw[fl] (pnew)--(pf);    \draw[fl] (pold)--(pf);
 \draw[fl] (pf)--(q2);      \draw[fl] (q2)--(gran);
 \draw[fl] (pf.south)--(scrap) node[midway,right,font=\tiny]{fail};
-\draw[sr] (pnew)--(rbn); \pic at ($(pnew)!0.42!(rbn)$){seizehm}; \pic at ($(pnew)!0.72!(rbn)$){relhm};
-\draw[sr] (pold)--(rbo); \pic at ($(pold)!0.42!(rbo)$){seizehm}; \pic at ($(pold)!0.72!(rbo)$){relhm};
-\draw[sr] (gran)--(rg);  \pic at ($(gran)!0.42!(rg)$){seizehm};  \pic at ($(gran)!0.74!(rg)$){relhm};
+\draw[sz] (rbn) to[bend left=20] (pnew); \draw[sz] (pnew) to[bend left=20] (rbn);
+\draw[sz] (rbo) to[bend left=20] (pold); \draw[sz] (pold) to[bend left=20] (rbo);
+\draw[sz] (rg)  to[bend left=20] (gran); \draw[sz] (gran) to[bend left=20] (rg);
 
 % ---- Row 2: drying, compression, CoreTab check ----
 \node[qu] (q3) at (1.7,-4.3) {Drying\\queue};
@@ -105,8 +100,8 @@ failure or pre-packaging inspection scraps material.}
 \draw[fl] (gran.east) -- (12.8,0) -- (12.8,-3.5) -- (0.4,-3.5) -- (0.4,-4.3) -- (q3.west);
 \draw[fl] (q3)--(dry);  \draw[fl] (dry)--(q4);
 \draw[fl] (q4)--(comp); \draw[fl] (comp)--(core);
-\draw[sr] (dry)--(rd);  \pic at ($(dry)!0.42!(rd)$){seizehm};  \pic at ($(dry)!0.74!(rd)$){relhm};
-\draw[sr] (comp)--(rp); \pic at ($(comp)!0.42!(rp)$){seizehm}; \pic at ($(comp)!0.74!(rp)$){relhm};
+\draw[sz] (rd) to[bend left=20] (dry);  \draw[sz] (dry)  to[bend left=20] (rd);
+\draw[sz] (rp) to[bend left=20] (comp); \draw[sz] (comp) to[bend left=20] (rp);
 
 % ---- Row 3: coating, packaging, ship ----
 \node[ac] (coat) at (2.1,-8.0) {Coat $+$ clean\\$\sim$2 h $+$ 1 h};
@@ -118,26 +113,21 @@ failure or pre-packaging inspection scraps material.}
 \draw[fl] (core.south) -- (10.3,-5.9) -- (0.7,-5.9) -- (0.7,-8.0) -- (coat.west) node[pos=0.05,above,font=\tiny]{no};
 \draw[fl] (core.south) -- (9.9,-5.4) -- (4.8,-5.4) node[midway,above,font=\tiny]{yes} -- (q5.north);
 \draw[fl] (coat)--(q5); \draw[fl] (q5)--(pack); \draw[fl] (pack)--(ship);
-\draw[sr] (coat)--(rc); \pic at ($(coat)!0.42!(rc)$){seizehm}; \pic at ($(coat)!0.74!(rc)$){relhm};
-\draw[sr] (pack)--(rl); \pic at ($(pack)!0.42!(rl)$){seizehm}; \pic at ($(pack)!0.74!(rl)$){relhm};
+\draw[sz] (rc) to[bend left=20] (coat); \draw[sz] (coat) to[bend left=20] (rc);
+\draw[sz] (rl) to[bend left=20] (pack); \draw[sz] (pack) to[bend left=20] (rl);
 
 % ---- Shared cleaning team (one resource, seized at the three cleans) ----
-\node[rs, fill=black!16] (clt) at (4.6,-9.7) {Cleaning\\team};
-% short vertical links to coating and packaging cleans
-\draw[sr] (clt) -- (2.1,-9.7) -- (coat.south);
-  \pic at (2.1,-9.0){seizehm}; \pic at (2.1,-8.5){relhm};
-\draw[sr] (clt) -- (7.0,-9.7) -- (pack.south);
-  \pic at (7.0,-9.0){seizehm}; \pic at (7.0,-8.5){relhm};
-% link up the left margin to the drying clean
-\draw[sr] (clt) -- (0.3,-9.7) -- (0.3,-5.0) -- (3.9,-5.0) -- (dry.south);
-  \pic at (3.0,-9.7){seizehm}; \pic at (2.4,-9.7){relhm};
+\node[rs, fill=black!16] (clt) at (5.7,-6.5) {Cleaning\\team};
+\draw[sz] (clt) to[bend left=12] (dry);  \draw[sz] (dry)  to[bend left=12] (clt);
+\draw[sz] (clt) to[bend left=12] (coat); \draw[sz] (coat) to[bend left=12] (clt);
+\draw[sz] (clt) to[bend left=12] (pack); \draw[sz] (pack) to[bend left=12] (clt);
 \end{tikzpicture}%
 }
 \caption{Activity diagram in Rossetti notation, read left-to-right and wrapping
 across three rows. Queues are circles, activities rectangles with their delay
-distribution, resources small circles; a striped half-moon marks a seize and a
-solid half-moon a release. Premix is drawn as its old and new units; the shared
-cleaning team is seized at the drying clean, the coating clean and the packaging
-setup.}
+distribution, resources small circles. Each resource connects to its activity by
+two curved dotted lines: the seize (resource to activity) and the release
+(activity back to resource). Premix is drawn as its old and new units; the shared
+cleaning team is seized and released at the drying, coating and packaging cleans.}
 \label{fig:activity}
 \end{figure}
