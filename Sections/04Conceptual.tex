@@ -56,7 +56,8 @@ failure or pre-packaging inspection scraps material.}
 \label{sec:activity}
 \begin{figure}[H]
 \centering
-\resizebox{\textwidth}{!}{%
+% Changed from \textwidth to 0.75\textwidth to reduce physical size
+\resizebox{0.75\textwidth}{!}{%
 \begin{tikzpicture}[
   >=Stealth, font=\scriptsize,
   qu/.style={circle, draw, align=center, minimum size=9mm, inner sep=0.3pt, font=\tiny},
@@ -111,7 +112,7 @@ failure or pre-packaging inspection scraps material.}
 \node (ship) at (9.2,-8.0) {\itshape Ship};
 \node[rs] (rc) at (2.1,-6.6) {Coater};
 \node[rs] (rl) at (7.0,-6.6) {Line (3)};
-\draw[fl] (core.south) -- (10.3,-5.9) -- (0.7,-5.9) -- (0.7,-8.0) -- (coat.west) node[pos=0.05,above,font=\tiny]{no};
+\draw[fl] (core.south) -- (10.3,-5.9) -- (0.7,-5.9) -- (0.7,-8.0) -- (coat.west) node[pos=-0.50,above,font=\tiny]{no};
 \draw[fl] (core.south) -- (9.9,-5.4) -- (4.8,-5.4) node[midway,above,font=\tiny]{yes} -- (q5.north);
 \draw[fl] (coat)--(q5); \draw[fl] (q5)--(pack); \draw[zz] (pack)--(ship);
 \draw[sz] (rc) to[bend left=20] (coat); \draw[sz] (coat) to[bend left=20] (rc);
