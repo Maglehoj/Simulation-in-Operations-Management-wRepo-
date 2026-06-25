@@ -3,24 +3,37 @@
 
 % Mandatory. Document how each distribution was obtained.
 Deterministic operation times and frequencies are taken directly from
-\texttt{FermaCore\_input\_data.xlsx}. Three quantities were fitted from the
-supplied observation sets using the distribution fitter, with a
-Kolmogorov--Smirnov (KS) goodness-of-fit check.
+\texttt{FermaCore\_input\_data.xlsx}. The case requires three quantities to be
+estimated from the supplied observation sets with the distribution fitter: the
+\emph{drying processing time}, the \emph{premix/blending repair duration} and
+the \emph{packaging-line repair duration}. Each was fitted and checked with a
+Kolmogorov--Smirnov (KS) goodness-of-fit test (Table~\ref{tab:fits},
+Fig.~\ref{fig:fits}).
 
 \begin{table}[H]
 \centering
-\caption{Fitted distributions. Parameters cross-checked independently (KS).}
+\caption{Fitted distributions, with the Kolmogorov--Smirnov goodness-of-fit
+$p$-value and the exact AnyLogic call (repair times in hours).}
 \label{tab:fits}
 \begin{tabularx}{\textwidth}{l l l X}
 \toprule
-\textbf{Quantity} & \textbf{Distribution} & \textbf{Parameters} & \textbf{AnyLogic} \\
+\textbf{Quantity} & \textbf{Distribution} & \textbf{Fitted parameters} & \textbf{AnyLogic call} \\
 \midrule
-Drying time (h/batch)        & Normal    & $\mu=4.00,\ \sigma=0.39$ (KS $p=0.93$) & \texttt{normal(0.393, 3.998)} \\
-Premix repair (min)          & Lognormal & $\mu_{\log}=3.15,\ \sigma_{\log}=1.09$ (KS $p=0.24$) & \texttt{lognormal(0, 3.153, 1.087)} \\
-Packaging-line repair (min)  & Lognormal & $\mu_{\log}=5.18,\ \sigma_{\log}=1.00$ (KS $p=0.65$) & \texttt{lognormal(0, 5.180, 0.999)} \\
+Drying time (h/batch), $n{=}300$      & Triangular & min $2.703$, max $5.541$, mode $3.749$ (mean $4.00$) & \texttt{triangular(2.703493,} \texttt{5.541093, 3.748756)} \\
+Premix repair (h), $n{=}500$          & Lognormal  & mean $0.80$, std $2.09$ (KS $p=0.24$) & \texttt{lognormal(0.803, 2.086)} \\
+Packaging repair (h), $n{=}1000$      & Lognormal  & mean $5.01$, std $7.67$ (KS $p=0.66$) & \texttt{lognormal(5.009, 7.671)} \\
 \bottomrule
 \end{tabularx}
 \end{table}
+
+\paragraph{Drying-time fit.} The drying observations are symmetric about a mean
+of \SI{4.00}{h} (skewness $\approx 0$). The model implements a triangular
+distribution that reproduces the empirical mean and the full observed range
+$[2.703,5.541]$~h; a \texttt{Normal}$(4.00,0.39)$ gives a closer fit to the
+symmetric shape (Fig.~\ref{fig:fits}, KS $p=0.92$). Because drying is the
+bottleneck, throughput is driven by the \emph{mean} -- identical for both -- so
+the choice is immaterial to throughput, while the triangular yields a
+conservative (wider) variance for the flow-time and WIP measures.
 
 \paragraph{Given distributions (not fitted).}
 Premix new Triangular(3.5,4.0,4.5) h; premix old Triangular(4.5,5.5,6.5) h;
@@ -31,24 +44,21 @@ Weibull($\beta{=}2.5,\alpha{=}1.5$) days; premix new Weibull($\beta{=}3.5,\alpha
 
 \begin{figure}[H]
 \centering
-% JACOB: drop hist_drying.png / hist_premix_repair.png / hist_pack_repair.png into
-% figures/, then replace each \fbox{...} below with the matching \includegraphics line.
 \begin{subfigure}{0.32\textwidth}\centering
-  % \includegraphics[width=\textwidth]{hist_drying.png}
-  \fbox{\parbox[c][26mm][c]{\textwidth}{\centering\itshape Drying fit\\(histogram + Normal overlay)}}
+  \includegraphics[width=\textwidth]{fig_fit_drying.pdf}
   \caption{Drying time}
 \end{subfigure}\hfill
 \begin{subfigure}{0.32\textwidth}\centering
-  % \includegraphics[width=\textwidth]{hist_premix_repair.png}
-  \fbox{\parbox[c][26mm][c]{\textwidth}{\centering\itshape Premix-repair fit\\(histogram + Lognormal)}}
+  \includegraphics[width=\textwidth]{fig_fit_premix.pdf}
   \caption{Premix repair}
 \end{subfigure}\hfill
 \begin{subfigure}{0.32\textwidth}\centering
-  % \includegraphics[width=\textwidth]{hist_pack_repair.png}
-  \fbox{\parbox[c][26mm][c]{\textwidth}{\centering\itshape Packaging-repair fit\\(histogram + Lognormal)}}
+  \includegraphics[width=\textwidth]{fig_fit_packaging.pdf}
   \caption{Packaging repair}
 \end{subfigure}
 \caption{Distribution-fitter output for the three fitted quantities: empirical
-histogram with the fitted density overlaid (KS $p$-values in Table~\ref{tab:fits}).}
+histogram with the fitted density overlaid (KS $p$-values in Table~\ref{tab:fits}).
+For drying, the Normal fit (KS $p=0.92$) is shown solid and the implemented
+triangular dashed.}
 \label{fig:fits}
 \end{figure}
