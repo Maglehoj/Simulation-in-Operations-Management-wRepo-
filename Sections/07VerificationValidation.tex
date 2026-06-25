@@ -6,30 +6,25 @@ Rossetti~\cite{rossetti2016}: first confirming it was built right, then that it
 is the right model of the line.
 
 \subsection{Verification (did we build the model right?)}
-% Show the model behaves as intended.
-\begin{itemize}\setlength\itemsep{1pt}
-  \item Trace a single batch through every block; confirm routing, coating
-        bypass for CoreTab, and seize/release of \texttt{cleaningTeam}.
-  \item Degenerate tests: zero failures $\rightarrow$ no scrap from repair;
-        one product only $\rightarrow$ zero changeovers.
-  \item Conservation check: tablets in $=$ tablets bottled $+$ scrapped.
-  \item Mass balance: bottles $\times$ size $\le$ \num{300000}/batch.
-\end{itemize}
+We checked the implementation in four ways. First, we traced a single batch
+through every block to confirm the routing, the coating bypass for CoreTab, and
+the seize and release of the \texttt{cleaningTeam}. Two degenerate runs then gave
+the expected behaviour: with zero failures there is no repair scrap, and with one
+product there are no changeovers. A conservation check confirms that the tablets
+entering equal the tablets bottled plus the tablets scrapped, and a mass balance
+confirms that bottles times bottle size never exceed \num{300000} per batch.
 
 \subsection{Validation and calibration (did we build the right model?)}
-% Compare to expected/analytic values.
-\begin{itemize}\setlength\itemsep{1pt}
-  \item Analytic sanity: drying carries the largest required machine-hours
-        ($\approx\SI{300}{h}$ over the plan, Table~\ref{tab:capacity})
-        $\Rightarrow$ \textbf{drying} is the expected constraint, ahead of the
-        cleaning team and packaging. The simulated baseline utilisation
-        (drying \SI{94.9}{\percent}, cleaning team \SI{79.6}{\percent},
-        packaging \SI{52.2}{\percent}) confirms this ordering.
-  \item Per-station mean processing times reproduce the input distributions
-        (collect and compare).
-  \item Calibrate any free assumption (e.g.\ bottle-fill rounding) so baseline
-        KPIs are internally consistent before running experiments.
-\end{itemize}
+For validation we compare the model against analytic expectations. Drying carries
+the largest required machine-hours over the plan (about \SI{300}{h},
+Table~\ref{tab:capacity}), so it should be the binding constraint, ahead of the
+cleaning team and packaging. The simulated baseline utilisation confirms this
+ordering: drying \SI{94.9}{\percent}, cleaning team \SI{79.6}{\percent} and
+packaging \SI{52.2}{\percent}. The per-station mean processing times also
+reproduce the input distributions they were drawn from. The one free modelling
+choice, namely how leftover tablets that cannot complete a bottle are rounded
+down, was fixed so that the baseline yield and throughput stay internally
+consistent before we ran the experiments.
 
 \begin{table}[H]
 \centering
@@ -90,6 +85,6 @@ where $\overline{W}$ is mean flow time. The throughput rate is taken
 count over the makespan: $\lambda = 46.9/436.2 = 0.1075$ batches/h. With
 $\overline{W}=\SI{180.0}{\hour}$ this
 predicts $\lambda\overline{W}=19.36$ batches, against a directly measured
-$\overline{\text{WIP}}=19.53$ batches --- a \SI{0.9}{\percent} discrepancy, well
-within sampling error. The three flow KPIs are mutually consistent, confirming
-the model conserves work.
+$\overline{\text{WIP}}=19.53$ batches, a \SI{0.9}{\percent} discrepancy that is
+well within sampling error. The three flow KPIs are therefore mutually
+consistent, which confirms that the model conserves work.

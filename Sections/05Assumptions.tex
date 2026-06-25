@@ -1,32 +1,35 @@
 \section{Documented Assumptions}
 \label{sec:assumptions}
 
-% Mandatory. Keep as a tight list; this is where examiners look for rigour.
-\begin{enumerate}\setlength\itemsep{1pt}
-  \item One agent represents one process-batch. The production plan specifies
-        \SI{150}{\kilo\gram} of pre-weighed active-ingredient powder blend per
-        batch; \SI{75}{\kilo\gram} of excipients is added in premix, giving a
-        \SI{225}{\kilo\gram} batch. With \SI{500}{\milli\gram} active and
-        \SI{250}{\milli\gram} excipient per \SI{750}{\milli\gram} tablet, each
-        batch yields \num{300000} tablets
-        ($\text{tablets} = \text{kg}_{\text{active}} \times 2000$) before yield losses.
-  \item Batches never mix (full traceability); each is a separate entity end-to-end.
-  \item Time unit: \textbf{hours}. Horizon: the 5-day plan, run until the last
-        batch is shipped (terminating).
-  \item Arrivals follow the \texttt{Plan} table exactly (50 batches, 1--5 Jul,
-        10/day, mix 17 CoreTab / 18 PlusTab / 15 MaxTab).
-  \item Premix routes to whichever unit (old/new) is free; failure during
-        processing scraps the whole batch.
-  \item A single shared \texttt{cleaningTeam} (capacity 1) performs all cleaning,
-        setup, changeover \emph{and} repairs (seize/delay/release).
-  \item CoreTab skips coating; PlusTab and MaxTab are coated.
-  \item Packaging is rate-based at \SI{30000}{tablets/hour} per line; leftover
-        tablets that cannot fill a full bottle are scrapped.
-  \item Yields: premix Triangular(98.5\%,99\%,99.5\%); press scrap \SI{10}{\percent}
-        (baseline); packaging Triangular(99\%,99.5\%,99.8\%). Drying yield 100\%.
-  \item Repairs and the cleaning team start empty-and-idle each simulated week.
-  \item The dryer queue uses FIFO discipline (\texttt{queueStrategy}~$=0$) in the
-        baseline; EDD and SPT alternatives are tested in
-        Section~\ref{sec:experiments} and leave throughput unchanged, since
-        drying times are near-homogeneous ($\sigma\approx\SI{0.39}{\hour}$).
-\end{enumerate}
+% Mandatory. Model assumptions, grouped by entity, schedule, routing/resources and yields.
+The model represents one process-batch as a single agent. The production plan
+gives each batch as \SI{150}{\kilo\gram} of pre-weighed active-ingredient powder
+blend, and \SI{75}{\kilo\gram} of excipients is added in premix, so a batch
+weighs \SI{225}{\kilo\gram}. With \SI{500}{\milli\gram} active and
+\SI{250}{\milli\gram} excipient in each \SI{750}{\milli\gram} tablet, one batch
+gives \num{300000} tablets before yield losses
+($\text{tablets} = \text{kg}_{\text{active}} \times 2000$). Batches never mix,
+because of full traceability, so each batch stays a separate entity from start
+to end.
+
+The time unit is hours and the horizon is the five-day plan. The run is
+terminating and stops when the last batch is shipped. Arrivals follow the
+\texttt{Plan} table exactly: 50 batches over 1--5 July, ten per day, with a mix
+of 17 CoreTab, 18 PlusTab and 15 MaxTab.
+
+For routing and resources we make the following assumptions. Premix sends each
+batch to whichever unit, old or new, is free, and a failure during processing
+scraps the whole batch. CoreTab skips coating, while PlusTab and MaxTab are
+coated. Packaging is rate-based at \SI{30000}{tablets/hour} per line, and
+leftover tablets that cannot fill a full bottle are scrapped. One shared
+\texttt{cleaningTeam} of capacity one performs all cleaning, setup, changeover
+and repairs through a seize-delay-release logic, which is why these activities
+compete for the same resource.
+
+The yield assumptions are premix Triangular(98.5\%, 99\%, 99.5\%), a baseline
+press scrap of \SI{10}{\percent}, packaging Triangular(99\%, 99.5\%, 99.8\%) and
+a drying yield of \SI{100}{\percent}. Repairs and the cleaning team start empty
+and idle in each simulated week. The dryer queue uses FIFO discipline
+(\texttt{queueStrategy}~$=0$) in the baseline; the EDD and SPT alternatives are
+tested in Section~\ref{sec:experiments} and leave throughput unchanged, because
+the drying times are near-homogeneous ($\sigma\approx\SI{0.39}{\hour}$).

@@ -1,53 +1,69 @@
 \section{Performance Management}
 \label{sec:performance}
 
-To evaluate the FermaCore line and compare improvement scenarios, we use four Key Performance Indicators (KPIs). The four are independent (no overlapping measurement) and defined with the S.M.A.R.T. framework against management's objectives.
+To evaluate the FermaCore line and to compare improvement scenarios, we track
+five Key Performance Indicators (KPIs), described with the S.M.A.R.T.\ framework
+against management's objectives. Four are primary and cover output (throughput),
+the bottleneck (utilisation), congestion (flow time and WIP) and schedule
+adherence (on-time delivery); one is secondary and covers material efficiency
+(yield). Table~\ref{tab:kpis} gives the baseline value of each KPI, with the full
+results in Sections~\ref{sec:output} and~\ref{sec:experiments}.
 
 \begin{table}[H]
 \centering
-\caption{Performance metrics and S.M.A.R.T. justification.}
+\caption{Performance metrics, S.M.A.R.T.\ justification and baseline value.}
 \label{tab:kpis}
-\renewcommand{\arraystretch}{1.5}
-\begin{tabularx}{\textwidth}{@{} >{\raggedright\arraybackslash}p{4cm} X @{}}
+\renewcommand{\arraystretch}{1.2}%
+\small
+\begin{tabularx}{\textwidth}{@{} >{\raggedright\arraybackslash}p{3.5cm} X @{}}
 \toprule
-\rowcolor{black!5} 
-\textbf{Key Performance Indicator} & \multicolumn{1}{c}{\textbf{S.M.A.R.T}} \\
+\rowcolor{black!5}
+\textbf{Key Performance Indicator} & \multicolumn{1}{c}{\textbf{S.M.A.R.T.}} \\
 \midrule
 
 \textbf{Weekly throughput}\newline
-\textcolor{gray}{\small \textit{Headline metric}} & 
-\textcolor{red!70!black}{\textbf{S:}} Tracks the exact number of completed batches exiting the packaging lines. \newline
-\textcolor{orange!80!black}{\textbf{M:}} Counted discretely at the sink block using the \texttt{batchesShipped} variable. \newline
-\textcolor{green!60!black}{\textbf{A:}} The baseline establishes current limits, making subsequent improvements realistic. \newline
-\textcolor{blue!70!black}{\textbf{R:}} Directly answers the core objective regarding maximum output before capital expansion. \newline
-\textcolor{purple!70!black}{\textbf{T:}} Measured per production run (the terminating 50-batch plan). \\
+\textcolor{gray}{\footnotesize Baseline: \num{60972} bottles} &
+\textcolor{red!70!black}{\textbf{S:}} Bottles shipped from the packaging lines. \newline
+\textcolor{orange!80!black}{\textbf{M:}} Counted at the sink via \texttt{bottlesShipped}. \newline
+\textcolor{green!60!black}{\textbf{A:}} Baseline sets the ceiling; improvements are compared to it. \newline
+\textcolor{blue!70!black}{\textbf{R:}} The output management wants to raise before any expansion. \newline
+\textcolor{purple!70!black}{\textbf{T:}} Per terminating 50-batch run. \\
 \midrule
 
 \textbf{Station utilisation}\newline
-\textcolor{gray}{\small \textit{Headline metric}} & 
-\textcolor{red!70!black}{\textbf{S:}} Evaluates individual constraints (drying unit, packaging lines, cleaning team). \newline
-\textcolor{orange!80!black}{\textbf{M:}} Calculated as total busy hours divided by total available simulation hours. \newline
-\textcolor{green!60!black}{\textbf{A:}} Native output generated accurately by AnyLogic resource pools. \newline
-\textcolor{blue!70!black}{\textbf{R:}} Locates the bottleneck and verifies if improvements merely shift it to another station. \newline
-\textcolor{purple!70!black}{\textbf{T:}} Tracked continuously across the designated simulation run length. \\
+\textcolor{gray}{\footnotesize Baseline: dryer \SI{94.9}{\percent} (binding)} &
+\textcolor{red!70!black}{\textbf{S:}} Busy share of drying, cleaning team and packaging. \newline
+\textcolor{orange!80!black}{\textbf{M:}} Busy hours over available hours, from the resource pools. \newline
+\textcolor{green!60!black}{\textbf{A:}} Read directly from AnyLogic each run. \newline
+\textcolor{blue!70!black}{\textbf{R:}} Locates the bottleneck and shows if a fix only shifts it. \newline
+\textcolor{purple!70!black}{\textbf{T:}} Tracked across the whole run. \\
 \midrule
 
-\textbf{Batch flow time}\newline
-\textcolor{gray}{\small \textit{Headline metric}} & 
-\textcolor{red!70!black}{\textbf{S:}} Tracks the exact duration from premix start to packaging completion for each batch. \newline
-\textcolor{orange!80!black}{\textbf{M:}} Recorded using the \texttt{totalFlowTime} and \texttt{maxFlowTime} variables. \newline
-\textcolor{green!60!black}{\textbf{A:}} AnyLogic natively logs the entry and exit times of each batch agent. \newline
-\textcolor{blue!70!black}{\textbf{R:}} Ensures production meets the operational constraint of $\le$ 1-day deviation from the plan. \newline
-\textcolor{purple!70!black}{\textbf{T:}} Measured continuously for each completed batch during the simulation. \\
+\textbf{Flow time and WIP}\newline
+\textcolor{gray}{\footnotesize Baseline: \SI{180}{h} / 19.5 batches} &
+\textcolor{red!70!black}{\textbf{S:}} Time a batch spends in the line, and batches in process. \newline
+\textcolor{orange!80!black}{\textbf{M:}} \texttt{meanFlowTime} and \texttt{avgWIP}, linked by Little's Law. \newline
+\textcolor{green!60!black}{\textbf{A:}} Logged from agent entry and exit times. \newline
+\textcolor{blue!70!black}{\textbf{R:}} Measures congestion and lead time as load grows toward 2030. \newline
+\textcolor{purple!70!black}{\textbf{T:}} Per batch, and time-averaged over the run. \\
 \midrule
 
-\textbf{System yield rate}\newline
-\textcolor{gray}{\small \textit{Secondary metric}} & 
-\textcolor{red!70!black}{\textbf{S:}} Focuses purely on material efficiency and tablet loss. \newline
-\textcolor{orange!80!black}{\textbf{M:}} Tracks \texttt{batchesScrapped} and final \texttt{tablets} count relative to the starting volume. \newline
-\textcolor{green!60!black}{\textbf{A:}} Calculated by subtracting scrap events at premix, compression, and packaging. \newline
-\textcolor{blue!70!black}{\textbf{R:}} Evaluates if the Industry 4.0 scenario (reducing press scrap) translates to higher final output. \newline
-\textcolor{purple!70!black}{\textbf{T:}} Calculated cumulatively at the end of each terminating run. \\
+\textbf{On-time delivery}\newline
+\textcolor{gray}{\footnotesize Baseline: \SI{100}{\percent} (max dev.\ \SI{18.5}{h})} &
+\textcolor{red!70!black}{\textbf{S:}} Share of batches shipped within one day of the planned date. \newline
+\textcolor{orange!80!black}{\textbf{M:}} \texttt{releaseViolations} and \texttt{maxReleaseDev} against the \SI{24}{h} rule. \newline
+\textcolor{green!60!black}{\textbf{A:}} Compared against the plan's release dates each run. \newline
+\textcolor{blue!70!black}{\textbf{R:}} The case's one-day release constraint; tested under 2030 demand. \newline
+\textcolor{purple!70!black}{\textbf{T:}} Per batch, summarised per run. \\
+\midrule
+
+\textbf{System yield}\newline
+\textcolor{gray}{\footnotesize Secondary, baseline scrap \SI{6.2}{\percent}} &
+\textcolor{red!70!black}{\textbf{S:}} Good tablets kept versus tablets scrapped. \newline
+\textcolor{orange!80!black}{\textbf{M:}} \texttt{scrapRate} from premix, press and packaging losses. \newline
+\textcolor{green!60!black}{\textbf{A:}} Computed from scrap events at the end of each run. \newline
+\textcolor{blue!70!black}{\textbf{R:}} The lever behind Industry 4.0 (press scrap \SI{10}{\percent} to \SI{4}{\percent}). \newline
+\textcolor{purple!70!black}{\textbf{T:}} Cumulative per terminating run. \\
 
 \bottomrule
 \end{tabularx}
