@@ -57,11 +57,12 @@ failure or pre-packaging inspection scraps material.}
 \begin{figure}[H]
 \centering
 \tikzset{
-  seizehm/.pic={\fill[pattern=north east lines] (-1.3mm,0) arc (180:360:1.3mm) -- cycle;
-                \draw[line width=0.2pt] (-1.3mm,0) -- (1.3mm,0);},
-  relhm/.pic={\fill[black!45] (-1.3mm,0) arc (180:360:1.3mm) -- cycle;
-              \draw[line width=0.2pt] (-1.3mm,0) -- (1.3mm,0);}}
-\resizebox{!}{8cm}{%
+  % seize = striped half-moon, release = solid half-moon (both outlined)
+  seizehm/.pic={\fill[pattern=north east lines] (-1.7mm,0) -- (1.7mm,0) arc (0:-180:1.7mm) -- cycle;
+                \draw[line width=0.3pt] (-1.7mm,0) -- (1.7mm,0) arc (0:-180:1.7mm) -- cycle;},
+  relhm/.pic={\fill[black!40] (-1.7mm,0) -- (1.7mm,0) arc (0:-180:1.7mm) -- cycle;
+              \draw[line width=0.3pt] (-1.7mm,0) -- (1.7mm,0) arc (0:-180:1.7mm) -- cycle;}}
+\resizebox{\textwidth}{!}{%
 \begin{tikzpicture}[
   >=Stealth, font=\scriptsize,
   qu/.style={circle, draw, align=center, minimum size=9mm, inner sep=0.3pt, font=\tiny},
@@ -69,7 +70,7 @@ failure or pre-packaging inspection scraps material.}
   rs/.style={circle, draw, fill=black!8, align=center, minimum size=8mm, inner sep=0.3pt, font=\tiny},
   dc/.style={diamond, draw, aspect=1.5, align=center, inner sep=0.5pt, font=\tiny},
   fl/.style={->, thick},
-  sr/.style={densely dotted, gray!70}]
+  sr/.style={densely dotted, gray!60}]
 
 % ---- Row 1: create, premix (old/new split), failure check, granulation ----
 \node (create) at (0,0) {\itshape Create};
@@ -80,18 +81,18 @@ failure or pre-packaging inspection scraps material.}
 \node[dc] (pf) at (8.0,0) {fail?};
 \node[qu] (q2) at (9.7,0) {Gran.\\queue};
 \node[ac] (gran) at (11.5,0) {Granulate\\$\sim$N(1,0.1)};
-\node[rs] (rbn) at (5.5,2.2) {Blender\\new};
-\node[rs] (rbo) at (5.5,-2.2) {Blender\\old};
-\node[rs] (rg) at (11.5,1.7) {Gran.};
+\node[rs] (rbn) at (5.5,2.3) {Blender\\new};
+\node[rs] (rbo) at (5.5,-2.3) {Blender\\old};
+\node[rs] (rg) at (11.5,1.8) {Gran.};
 \node (scrap) at (8.0,-1.9) {\itshape scrap};
 \draw[fl] (create)--(q1);  \draw[fl] (q1)--(sel);
 \draw[fl] (sel)--(pnew);   \draw[fl] (sel)--(pold);
 \draw[fl] (pnew)--(pf);    \draw[fl] (pold)--(pf);
 \draw[fl] (pf)--(q2);      \draw[fl] (q2)--(gran);
 \draw[fl] (pf.south)--(scrap) node[midway,right,font=\tiny]{fail};
-\draw[sr] (pnew)--(rbn); \pic at ($(pnew)!0.45!(rbn)$){seizehm}; \pic at ($(pnew)!0.7!(rbn)$){relhm};
-\draw[sr] (pold)--(rbo); \pic at ($(pold)!0.45!(rbo)$){seizehm}; \pic at ($(pold)!0.7!(rbo)$){relhm};
-\draw[sr] (gran)--(rg);  \pic at ($(gran)!0.45!(rg)$){seizehm};  \pic at ($(gran)!0.72!(rg)$){relhm};
+\draw[sr] (pnew)--(rbn); \pic at ($(pnew)!0.42!(rbn)$){seizehm}; \pic at ($(pnew)!0.72!(rbn)$){relhm};
+\draw[sr] (pold)--(rbo); \pic at ($(pold)!0.42!(rbo)$){seizehm}; \pic at ($(pold)!0.72!(rbo)$){relhm};
+\draw[sr] (gran)--(rg);  \pic at ($(gran)!0.42!(rg)$){seizehm};  \pic at ($(gran)!0.74!(rg)$){relhm};
 
 % ---- Row 2: drying, compression, CoreTab check ----
 \node[qu] (q3) at (1.7,-4.3) {Drying\\queue};
@@ -101,11 +102,11 @@ failure or pre-packaging inspection scraps material.}
 \node[dc] (core) at (10.3,-4.3) {CoreTab?};
 \node[rs] (rd) at (3.9,-2.9) {Dryer};
 \node[rs] (rp) at (8.1,-2.9) {Press (3)};
-\draw[fl] (gran.east) -- (12.7,0) -- (12.7,-3.4) -- (0.4,-3.4) -- (0.4,-4.3) -- (q3.west);
+\draw[fl] (gran.east) -- (12.8,0) -- (12.8,-3.5) -- (0.4,-3.5) -- (0.4,-4.3) -- (q3.west);
 \draw[fl] (q3)--(dry);  \draw[fl] (dry)--(q4);
 \draw[fl] (q4)--(comp); \draw[fl] (comp)--(core);
-\draw[sr] (dry)--(rd);  \pic at ($(dry)!0.45!(rd)$){seizehm};  \pic at ($(dry)!0.72!(rd)$){relhm};
-\draw[sr] (comp)--(rp); \pic at ($(comp)!0.45!(rp)$){seizehm}; \pic at ($(comp)!0.72!(rp)$){relhm};
+\draw[sr] (dry)--(rd);  \pic at ($(dry)!0.42!(rd)$){seizehm};  \pic at ($(dry)!0.74!(rd)$){relhm};
+\draw[sr] (comp)--(rp); \pic at ($(comp)!0.42!(rp)$){seizehm}; \pic at ($(comp)!0.74!(rp)$){relhm};
 
 % ---- Row 3: coating, packaging, ship ----
 \node[ac] (coat) at (2.1,-8.0) {Coat $+$ clean\\$\sim$2 h $+$ 1 h};
@@ -114,16 +115,22 @@ failure or pre-packaging inspection scraps material.}
 \node (ship) at (9.2,-8.0) {\itshape Ship};
 \node[rs] (rc) at (2.1,-6.6) {Coater};
 \node[rs] (rl) at (7.0,-6.6) {Line (3)};
-\node[rs, fill=black!16] (clt) at (11.4,-6.4) {Cleaning\\team};
-\draw[fl] (core.south) -- (10.3,-6.0) -- (0.6,-6.0) -- (0.6,-8.0) -- (coat.west) node[pos=0.15,right,font=\tiny]{no};
-\draw[fl] (core.south) -- (10.0,-5.5) -- (4.8,-5.5) node[midway,above,font=\tiny]{yes} -- (q5.north);
+\draw[fl] (core.south) -- (10.3,-5.9) -- (0.7,-5.9) -- (0.7,-8.0) -- (coat.west) node[pos=0.05,above,font=\tiny]{no};
+\draw[fl] (core.south) -- (9.9,-5.4) -- (4.8,-5.4) node[midway,above,font=\tiny]{yes} -- (q5.north);
 \draw[fl] (coat)--(q5); \draw[fl] (q5)--(pack); \draw[fl] (pack)--(ship);
-\draw[sr] (coat)--(rc); \pic at ($(coat)!0.45!(rc)$){seizehm}; \pic at ($(coat)!0.72!(rc)$){relhm};
-\draw[sr] (pack)--(rl); \pic at ($(pack)!0.45!(rl)$){seizehm}; \pic at ($(pack)!0.72!(rl)$){relhm};
-% shared cleaning team: seized at the drying, coating and packaging cleans
-\draw[sr] (dry)--(clt);  \pic at ($(dry)!0.5!(clt)$){seizehm};  \pic at ($(dry)!0.62!(clt)$){relhm};
-\draw[sr] (coat)--(clt); \pic at ($(coat)!0.6!(clt)$){seizehm}; \pic at ($(coat)!0.72!(clt)$){relhm};
-\draw[sr] (pack)--(clt); \pic at ($(pack)!0.55!(clt)$){seizehm}; \pic at ($(pack)!0.7!(clt)$){relhm};
+\draw[sr] (coat)--(rc); \pic at ($(coat)!0.42!(rc)$){seizehm}; \pic at ($(coat)!0.74!(rc)$){relhm};
+\draw[sr] (pack)--(rl); \pic at ($(pack)!0.42!(rl)$){seizehm}; \pic at ($(pack)!0.74!(rl)$){relhm};
+
+% ---- Shared cleaning team (one resource, seized at the three cleans) ----
+\node[rs, fill=black!16] (clt) at (4.6,-9.7) {Cleaning\\team};
+% short vertical links to coating and packaging cleans
+\draw[sr] (clt) -- (2.1,-9.7) -- (coat.south);
+  \pic at (2.1,-9.0){seizehm}; \pic at (2.1,-8.5){relhm};
+\draw[sr] (clt) -- (7.0,-9.7) -- (pack.south);
+  \pic at (7.0,-9.0){seizehm}; \pic at (7.0,-8.5){relhm};
+% link up the left margin to the drying clean
+\draw[sr] (clt) -- (0.3,-9.7) -- (0.3,-5.0) -- (3.9,-5.0) -- (dry.south);
+  \pic at (3.0,-9.7){seizehm}; \pic at (2.4,-9.7){relhm};
 \end{tikzpicture}%
 }
 \caption{Activity diagram in Rossetti notation, read left-to-right and wrapping
