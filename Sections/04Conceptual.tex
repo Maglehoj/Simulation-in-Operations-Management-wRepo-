@@ -7,9 +7,13 @@ specific product only at coating. The plan gives each batch as
 excipients is added in premix, giving a \SI{225}{\kilo\gram} batch of
 \num{300000} tablets.
 Figure~\ref{fig:flow} is the high-level flow chart; Figure~\ref{fig:activity} is
-the activity diagram (Rossetti notation~\cite{rossetti2016}): circles are queues, rectangles are
-activities with their delay distribution, small circles are resources, and
-dotted lines show the seizing/releasing of resources.
+the activity diagram in Rossetti notation~\cite{rossetti2016}, laid out as a
+left-to-right flow that wraps across rows. Circles are queues, rectangles are
+activities with their delay distribution, and small circles are resources. Each
+resource use is marked with a striped half-moon for the seize and a solid
+half-moon for the release. Premix is drawn as its two physical units (old and
+new), which differ in speed and failure rate; identical parallel resources
+(presses, packaging lines) are kept as one block with a capacity count.
 
 \subsection{System flow chart}
 \label{sec:flow}
@@ -52,55 +56,81 @@ failure or pre-packaging inspection scraps material.}
 \label{sec:activity}
 \begin{figure}[H]
 \centering
-\resizebox{0.38\textwidth}{!}{%
+\tikzset{
+  seizehm/.pic={\fill[pattern=north east lines] (-1.3mm,0) arc (180:360:1.3mm) -- cycle;
+                \draw[line width=0.2pt] (-1.3mm,0) -- (1.3mm,0);},
+  relhm/.pic={\fill[black!45] (-1.3mm,0) arc (180:360:1.3mm) -- cycle;
+              \draw[line width=0.2pt] (-1.3mm,0) -- (1.3mm,0);}}
+\resizebox{!}{8cm}{%
 \begin{tikzpicture}[
-  >=Stealth, font=\scriptsize, node distance = 4mm and 14mm,
-  qu/.style  = {circle, draw, align=center, minimum size=11mm, inner sep=0.4pt},
-  ac/.style  = {rectangle, draw, fill=blue!4, align=center, minimum height=9mm, minimum width=26mm},
-  rs/.style  = {circle, draw, fill=black!8, align=center, minimum size=9mm, inner sep=0.4pt, font=\tiny},
-  dc/.style  = {diamond, draw, aspect=1.6, align=center, inner sep=0.4pt, font=\tiny},
-  fl/.style  = {->, thick},
-  sr/.style  = {densely dotted, gray!70},
-  zz/.style  = {-{Stealth}, thick, decorate, decoration={zigzag, segment length=2.2mm, amplitude=0.9mm, pre length=1mm, post length=2mm}}]
-\node (create) {\itshape Create: batch (plan)};
-\node[qu, below=6mm of create] (q1) {Premix\\queue};
-\node[ac, below=of q1] (premix) {Premix\\ New: tri(3.5,4,4.5) h\\ Old: tri(4.5,5.5,6.5) h};
-\node[qu, below=of premix] (q2) {Gran.\\queue};
-\node[ac, below=of q2] (gran) {Granulate\\ N(1,0.1) h};
-\node[qu, below=of gran] (q3) {Drying\\queue};
-\node[ac, below=of q3] (dry) {Dry $+$ clean\\ N(4,0.39) h $+$ 2 h};
-\node[qu, below=of dry] (q4) {Compr.\\queue};
-\node[ac, below=of q4] (comp) {Compress\\ 2 h};
-\node[dc, below=of comp] (core) {CoreTab?};
-\node[ac, below=of core] (coat) {Coat $+$ clean\\ tri(1.5,2,2.5)$+$1 h};
-\node[qu, below=of coat] (q5) {Pack.\\queue};
-\node[ac, below=of q5] (pack) {Setup $+$ Package\\ 30k tab/h \,(scrap)};
-\node[below=6mm of pack] (dispose) {\itshape Dispose: ship};
-\node[rs, right=of premix] (rb) {Blenders (2)};
-\node[rs, right=of gran]   (rg) {Gran. (1)};
-\node[rs, right=of dry]    (rd) {Dryer (1)};
-\node[rs, right=of comp]   (rp) {Press (3)};
-\node[rs, right=of coat]   (rc) {Coater (1)};
-\node[rs, right=of pack]   (rl) {Line (3)};
-\node[rs, left=22mm of comp, fill=black!16] (clt) {Cleaning\\team};
-\draw[zz] (create) -- (q1);
-\draw[fl] (q1)--(premix);\draw[fl] (premix)--(q2);\draw[fl] (q2)--(gran);
-\draw[fl] (gran)--(q3);\draw[fl] (q3)--(dry);\draw[fl] (dry)--(q4);
-\draw[fl] (q4)--(comp);\draw[fl] (comp)--(core);
-\draw[fl] (core) -- node[right]{no} (coat);
-\draw[fl] (coat)--(q5);\draw[fl] (q5)--(pack);
-\draw[zz] (pack) -- (dispose);
-\draw[fl] (core.west) -- ++(-9mm,0) node[above,pos=0.55]{yes} |- (q5.west);
-\draw[sr] (premix)--(rb);\draw[sr] (gran)--(rg);\draw[sr] (dry)--(rd);
-\draw[sr] (comp)--(rp);\draw[sr] (coat)--(rc);\draw[sr] (pack)--(rl);
-\draw[sr] (clt) -- node[above,sloped,font=\tiny]{seize/release} (dry.west);
-\draw[sr] (clt) -- (coat.west);
-\draw[sr] (clt) |- (pack.west);
+  >=Stealth, font=\scriptsize,
+  qu/.style={circle, draw, align=center, minimum size=9mm, inner sep=0.3pt, font=\tiny},
+  ac/.style={rectangle, draw, fill=blue!4, align=center, minimum height=8mm, minimum width=19mm, font=\tiny},
+  rs/.style={circle, draw, fill=black!8, align=center, minimum size=8mm, inner sep=0.3pt, font=\tiny},
+  dc/.style={diamond, draw, aspect=1.5, align=center, inner sep=0.5pt, font=\tiny},
+  fl/.style={->, thick},
+  sr/.style={densely dotted, gray!70}]
+
+% ---- Row 1: create, premix (old/new split), failure check, granulation ----
+\node (create) at (0,0) {\itshape Create};
+\node[qu] (q1) at (1.7,0) {Premix\\queue};
+\node[dc] (sel) at (3.2,0) {route};
+\node[ac] (pnew) at (5.5,0.85) {Premix new\\$\sim$tri(3.5,4,4.5)};
+\node[ac] (pold) at (5.5,-0.85) {Premix old\\$\sim$tri(4.5,5.5,6.5)};
+\node[dc] (pf) at (8.0,0) {fail?};
+\node[qu] (q2) at (9.7,0) {Gran.\\queue};
+\node[ac] (gran) at (11.5,0) {Granulate\\$\sim$N(1,0.1)};
+\node[rs] (rbn) at (5.5,2.2) {Blender\\new};
+\node[rs] (rbo) at (5.5,-2.2) {Blender\\old};
+\node[rs] (rg) at (11.5,1.7) {Gran.};
+\node (scrap) at (8.0,-1.9) {\itshape scrap};
+\draw[fl] (create)--(q1);  \draw[fl] (q1)--(sel);
+\draw[fl] (sel)--(pnew);   \draw[fl] (sel)--(pold);
+\draw[fl] (pnew)--(pf);    \draw[fl] (pold)--(pf);
+\draw[fl] (pf)--(q2);      \draw[fl] (q2)--(gran);
+\draw[fl] (pf.south)--(scrap) node[midway,right,font=\tiny]{fail};
+\draw[sr] (pnew)--(rbn); \pic at ($(pnew)!0.45!(rbn)$){seizehm}; \pic at ($(pnew)!0.7!(rbn)$){relhm};
+\draw[sr] (pold)--(rbo); \pic at ($(pold)!0.45!(rbo)$){seizehm}; \pic at ($(pold)!0.7!(rbo)$){relhm};
+\draw[sr] (gran)--(rg);  \pic at ($(gran)!0.45!(rg)$){seizehm};  \pic at ($(gran)!0.72!(rg)$){relhm};
+
+% ---- Row 2: drying, compression, CoreTab check ----
+\node[qu] (q3) at (1.7,-4.3) {Drying\\queue};
+\node[ac] (dry) at (3.9,-4.3) {Dry $+$ clean\\$\approx$4 h $+$ 2 h};
+\node[qu] (q4) at (6.3,-4.3) {Compr.\\queue};
+\node[ac] (comp) at (8.1,-4.3) {Compress\\2 h};
+\node[dc] (core) at (10.3,-4.3) {CoreTab?};
+\node[rs] (rd) at (3.9,-2.9) {Dryer};
+\node[rs] (rp) at (8.1,-2.9) {Press (3)};
+\draw[fl] (gran.east) -- (12.7,0) -- (12.7,-3.4) -- (0.4,-3.4) -- (0.4,-4.3) -- (q3.west);
+\draw[fl] (q3)--(dry);  \draw[fl] (dry)--(q4);
+\draw[fl] (q4)--(comp); \draw[fl] (comp)--(core);
+\draw[sr] (dry)--(rd);  \pic at ($(dry)!0.45!(rd)$){seizehm};  \pic at ($(dry)!0.72!(rd)$){relhm};
+\draw[sr] (comp)--(rp); \pic at ($(comp)!0.45!(rp)$){seizehm}; \pic at ($(comp)!0.72!(rp)$){relhm};
+
+% ---- Row 3: coating, packaging, ship ----
+\node[ac] (coat) at (2.1,-8.0) {Coat $+$ clean\\$\sim$2 h $+$ 1 h};
+\node[qu] (q5) at (4.8,-8.0) {Pack.\\queue};
+\node[ac] (pack) at (7.0,-8.0) {Setup $+$ Pack\\30k tab/h};
+\node (ship) at (9.2,-8.0) {\itshape Ship};
+\node[rs] (rc) at (2.1,-6.6) {Coater};
+\node[rs] (rl) at (7.0,-6.6) {Line (3)};
+\node[rs, fill=black!16] (clt) at (11.4,-6.4) {Cleaning\\team};
+\draw[fl] (core.south) -- (10.3,-6.0) -- (0.6,-6.0) -- (0.6,-8.0) -- (coat.west) node[pos=0.15,right,font=\tiny]{no};
+\draw[fl] (core.south) -- (10.0,-5.5) -- (4.8,-5.5) node[midway,above,font=\tiny]{yes} -- (q5.north);
+\draw[fl] (coat)--(q5); \draw[fl] (q5)--(pack); \draw[fl] (pack)--(ship);
+\draw[sr] (coat)--(rc); \pic at ($(coat)!0.45!(rc)$){seizehm}; \pic at ($(coat)!0.72!(rc)$){relhm};
+\draw[sr] (pack)--(rl); \pic at ($(pack)!0.45!(rl)$){seizehm}; \pic at ($(pack)!0.72!(rl)$){relhm};
+% shared cleaning team: seized at the drying, coating and packaging cleans
+\draw[sr] (dry)--(clt);  \pic at ($(dry)!0.5!(clt)$){seizehm};  \pic at ($(dry)!0.62!(clt)$){relhm};
+\draw[sr] (coat)--(clt); \pic at ($(coat)!0.6!(clt)$){seizehm}; \pic at ($(coat)!0.72!(clt)$){relhm};
+\draw[sr] (pack)--(clt); \pic at ($(pack)!0.55!(clt)$){seizehm}; \pic at ($(pack)!0.7!(clt)$){relhm};
 \end{tikzpicture}%
 }
-\caption{Activity diagram (Rossetti notation). Circles are queues, rectangles are
-activities with delay distribution, small circles are resources; dotted lines
-indicate seizing/releasing. The shared cleaning team is seized at the drying
-clean, coating clean and packaging setup.}
+\caption{Activity diagram in Rossetti notation, read left-to-right and wrapping
+across three rows. Queues are circles, activities rectangles with their delay
+distribution, resources small circles; a striped half-moon marks a seize and a
+solid half-moon a release. Premix is drawn as its old and new units; the shared
+cleaning team is seized at the drying clean, the coating clean and the packaging
+setup.}
 \label{fig:activity}
 \end{figure}
