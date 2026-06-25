@@ -15,16 +15,33 @@
 \subsection{Validation and calibration (did we build the right model?)}
 % Compare to expected/analytic values.
 \begin{itemize}\setlength\itemsep{1pt}
-  \item Analytic sanity: packaging load $\approx 50\times\SI{10}{h}/3$ lines
-        $\approx \SI{167}{h}$ per week $\Rightarrow$ packaging is the expected
-        constraint. Confirm the simulated packaging utilisation matches.
+  \item Analytic sanity: drying carries the largest required machine-hours
+        ($\approx\SI{300}{h}$ over the plan, Table~\ref{tab:capacity})
+        $\Rightarrow$ \textbf{drying} is the expected constraint, ahead of the
+        cleaning team and packaging. The simulated baseline utilisation
+        (drying \SI{94.9}{\percent}, cleaning team \SI{79.6}{\percent},
+        packaging \SI{52.2}{\percent}) confirms this ordering.
   \item Per-station mean processing times reproduce the input distributions
         (collect and compare).
   \item Calibrate any free assumption (e.g.\ bottle-fill rounding) so baseline
         KPIs are internally consistent before running experiments.
 \end{itemize}
 
-% TODO: insert verification table (expected vs simulated) and a screenshot.
+\begin{table}[H]
+\centering
+\caption{Verification and validation checks against the $n=20$ baseline.}
+\label{tab:verify}
+\begin{tabularx}{\textwidth}{X l l c}
+\toprule
+Check & Expected & Simulated (baseline) & OK \\
+\midrule
+Batch conservation   & in $=$ shipped $+$ scrapped $=50$ & $46.9 + 3.1 = 50.0$ & \checkmark \\
+Primary constraint   & drying (largest unit-h)           & drying \SI{94.9}{\percent} util & \checkmark \\
+Constraint ordering  & drying $>$ clean $>$ packaging     & $94.9 > 79.6 > 52.2$ & \checkmark \\
+Little's Law         & $\overline{\text{WIP}} \approx \lambda\overline{W}$ & $19.36$ vs.\ $19.53$ (\SI{0.9}{\percent}) & \checkmark \\
+\bottomrule
+\end{tabularx}
+\end{table}
 
 \subsection{Analytical capacity check (predict, then confirm)}
 \label{sec:capacity}
@@ -64,6 +81,11 @@ $\text{WIP} = \lambda \cdot W$, linking our three flow KPIs:
   \overline{\text{WIP}} \;\approx\; \text{throughput rate} \times \overline{W},
   \label{eq:little}
 \end{equation}
-where $\overline{W}$ is mean flow time. Agreement within sampling error confirms
-the model conserves work and that our KPIs are internally consistent.
-% Fill: WIP=[ ], rate=[ ]/h, W=[ ] h  ->  rate*W = [ ] vs WIP = [ ]
+where $\overline{W}$ is mean flow time. The throughput rate is taken
+\emph{independently} of the WIP and flow-time statistics, from the shipped-batch
+count over the makespan: $\lambda = 46.9/436.2 = 0.1075$ batches/h. With
+$\overline{W}=\SI{180.0}{\hour}$ this
+predicts $\lambda\overline{W}=19.36$ batches, against a directly measured
+$\overline{\text{WIP}}=19.53$ batches --- a \SI{0.9}{\percent} discrepancy, well
+within sampling error. The three flow KPIs are mutually consistent, confirming
+the model conserves work.

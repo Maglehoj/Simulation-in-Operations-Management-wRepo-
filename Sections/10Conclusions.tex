@@ -4,18 +4,31 @@
 % ~0.75 page. Managerial takeaways, tied to the KPIs.
 \begin{itemize}\setlength\itemsep{1pt}
   \item The primary constraint is \textbf{drying} (highest required unit-hours
-        and simulated utilisation), with the \textbf{cleaning team} a close
-        second; packaging, despite the largest absolute workload, is third
-        because it runs on three parallel lines.
-  \item The most cost-effective improvement is \textbf{[relieving drying]},
-        which raises weekly throughput by \textbf{[x]\%} (95\% CI [\,]) and
-        \emph{also} unloads the cleaning team - a better return than the
-        capital-heavy packaging-line expansion the 2030 plan seeks to defer.
-  \item Sequencing batches by product reduces changeover load on the cleaning
-        team, with effect \textbf{[\,]}.
-  \item Towards 2030, the line sustains up to \textbf{[N]} batches/week before
-        backlog grows unbounded; the best improvement combination extends this to
-        \textbf{[M]}.
-  \item Industry~4.0 press sensors (scrap 10\%$\rightarrow$4\%) yield
-        \textbf{[\,]} additional good tablets/week, worth \textbf{[\,]}.
+        and \SI{94.9}{\percent} simulated utilisation), with the
+        \textbf{cleaning team} second (\SI{79.6}{\percent}); packaging, despite
+        the largest absolute workload, is third (\SI{52.2}{\percent}) because it
+        runs on three parallel lines.
+  \item \textbf{No capacity lever raises throughput.} A second dryer relieves
+        drying but shifts the bottleneck onto the cleaning team
+        (utilisation \SI{79.6}{\percent}$\rightarrow$\SI{94.8}{\percent}), since
+        each dryer adds a 2-hour clean; adding cleaning staff then shifts it
+        onto packaging. Shipped output holds at 60{,}000--62{,}000 bottles
+        throughout, because volume is fixed by the 50-batch plan and per-batch
+        yield, not by station capacity. The $2^3$ factorial confirms this: of
+        the seven effects, only a fourth packaging line is significant, and only
+        marginally ($+717$ bottles, $+\SI{1.2}{\percent}$).
+  \item Resequencing by product has no measurable effect on throughput
+        ($-\SI{0.6}{\percent}$, not significant); its only benefit is a small
+        reduction in flow time.
+  \item Towards 2030, the line absorbs demand compressed up to $\times2.0$ with
+        \textbf{zero release violations}; congestion rises (flow time
+        $+\SI{13}{\percent}$, WIP $+\SI{14}{\percent}$) but no unbounded backlog
+        forms. Drying --- not the schedule --- is the resource that would bind
+        first if the plan's batch volume itself grew.
+  \item \textbf{Industry~4.0 is the decisive lever.} Cutting press scrap from
+        \SI{10}{\percent} to \SI{4}{\percent} raises shipped throughput by
+        4{,}764 bottles per run ($+\SI{7.8}{\percent}$, 95\% CI
+        $[3{,}479,\,6{,}050]$) --- over six times the only significant
+        capacity effect, achieved through a one-off sensor retrofit with no added
+        line capacity and no recurring cost.
 \end{itemize}

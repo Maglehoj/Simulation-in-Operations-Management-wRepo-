@@ -29,4 +29,26 @@ coating Triangular(1.5,2.0,2.5) h; packaging \SI{30000}{tablets/hour}.
 Failure inter-arrival: packaging Exponential(mean 4 h); premix old
 Weibull($\beta{=}2.5,\alpha{=}1.5$) days; premix new Weibull($\beta{=}3.5,\alpha{=}0.5$) days.
 
-% TODO: insert histogram + fitted-overlay screenshots from the fitter (figures/).
+\begin{figure}[H]
+\centering
+% JACOB: drop hist_drying.png / hist_premix_repair.png / hist_pack_repair.png into
+% figures/, then replace each \fbox{...} below with the matching \includegraphics line.
+\begin{subfigure}{0.32\textwidth}\centering
+  % \includegraphics[width=\textwidth]{hist_drying.png}
+  \fbox{\parbox[c][26mm][c]{\textwidth}{\centering\itshape Drying fit\\(histogram + Normal overlay)}}
+  \caption{Drying time}
+\end{subfigure}\hfill
+\begin{subfigure}{0.32\textwidth}\centering
+  % \includegraphics[width=\textwidth]{hist_premix_repair.png}
+  \fbox{\parbox[c][26mm][c]{\textwidth}{\centering\itshape Premix-repair fit\\(histogram + Lognormal)}}
+  \caption{Premix repair}
+\end{subfigure}\hfill
+\begin{subfigure}{0.32\textwidth}\centering
+  % \includegraphics[width=\textwidth]{hist_pack_repair.png}
+  \fbox{\parbox[c][26mm][c]{\textwidth}{\centering\itshape Packaging-repair fit\\(histogram + Lognormal)}}
+  \caption{Packaging repair}
+\end{subfigure}
+\caption{Distribution-fitter output for the three fitted quantities: empirical
+histogram with the fitted density overlaid (KS $p$-values in Table~\ref{tab:fits}).}
+\label{fig:fits}
+\end{figure}

@@ -58,7 +58,9 @@ For scenario comparisons the relevant precision is the confidence interval on th
 \emph{difference} from the baseline, not on a single mean. At $n=20$ this resolves
 the large effects (the Industry 4.0 scrap reduction, and the combined
 dryer-plus-cleaning-team configuration on flow time and makespan), while the effect
-of any single added machine falls below the detectable threshold. As shown in
-Section~\ref{sec:experiments}, that non-detectability is itself a result: it confirms
-the line is demand limited rather than capacity limited, so adding one unit of
-capacity does not move the operational KPIs by a statistically meaningful amount.
+of any single added machine on throughput falls below the detectable threshold. As
+shown in Section~\ref{sec:experiments}, that non-detectability is itself a result:
+shipped volume is fixed by the 50-batch plan and per-batch yield, so adding one unit
+of capacity shifts the bottleneck and changes flow time and utilisation, but does not
+move throughput by a statistically meaningful amount. The only lever that raises
+shipped output is the scrap reduction, which acts on yield rather than capacity.

@@ -1,7 +1,7 @@
 \section{Performance Management}
 \label{sec:performance}
 
-To evaluate the operational performance of the FermaCore line and compare improvement scenarios, we established four distinct Key Performance Indicators (KPIs). These metrics are designed to be independent, avoiding overlapping measurements, and are strictly defined using the S.M.A.R.T. framework to directly address management's objectives.
+To evaluate the FermaCore line and compare improvement scenarios, we use four Key Performance Indicators (KPIs). The four are independent (no overlapping measurement) and defined with the S.M.A.R.T. framework against management's objectives.
 
 \begin{table}[H]
 \centering
@@ -20,7 +20,7 @@ To evaluate the operational performance of the FermaCore line and compare improv
 \textcolor{orange!80!black}{\textbf{M:}} Counted discretely at the sink block using the \texttt{batchesShipped} variable. \newline
 \textcolor{green!60!black}{\textbf{A:}} The baseline establishes current limits, making subsequent improvements realistic. \newline
 \textcolor{blue!70!black}{\textbf{R:}} Directly answers the core objective regarding maximum output before capital expansion. \newline
-\textcolor{purple!70!black}{\textbf{T:}} Measured uniformly over a standard 168-hour production week. \\
+\textcolor{purple!70!black}{\textbf{T:}} Measured per production run (the terminating 50-batch plan). \\
 \midrule
 
 \textbf{Station utilisation}\newline
@@ -47,7 +47,7 @@ To evaluate the operational performance of the FermaCore line and compare improv
 \textcolor{orange!80!black}{\textbf{M:}} Tracks \texttt{batchesScrapped} and final \texttt{tablets} count relative to the starting volume. \newline
 \textcolor{green!60!black}{\textbf{A:}} Calculated by subtracting scrap events at premix, compression, and packaging. \newline
 \textcolor{blue!70!black}{\textbf{R:}} Evaluates if the Industry 4.0 scenario (reducing press scrap) translates to higher final output. \newline
-\textcolor{purple!70!black}{\textbf{T:}} Calculated cumulatively at the end of the steady-state simulation period. \\
+\textcolor{purple!70!black}{\textbf{T:}} Calculated cumulatively at the end of each terminating run. \\
 
 \bottomrule
 \end{tabularx}

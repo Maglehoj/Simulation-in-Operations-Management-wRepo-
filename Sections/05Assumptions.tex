@@ -25,4 +25,8 @@
   \item Yields: premix Triangular(98.5\%,99\%,99.5\%); press scrap \SI{10}{\percent}
         (baseline); packaging Triangular(99\%,99.5\%,99.8\%). Drying yield 100\%.
   \item Repairs and the cleaning team start empty-and-idle each simulated week.
+  \item The dryer queue uses FIFO discipline (\texttt{queueStrategy}~$=0$) in the
+        baseline; EDD and SPT alternatives are tested in
+        Section~\ref{sec:experiments} and leave throughput unchanged, since
+        drying times are near-homogeneous ($\sigma\approx\SI{0.39}{\hour}$).
 \end{enumerate}
