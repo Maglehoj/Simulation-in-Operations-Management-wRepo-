@@ -51,7 +51,7 @@ results in Sections~\ref{sec:output} and~\ref{sec:experiments}.
 \textbf{On-time delivery}\newline
 \textcolor{gray}{\footnotesize Baseline: \SI{100}{\percent} on time} &
 \textcolor{red!70!black}{\textbf{S:}} Share of batches shipped on or before their due date. \newline
-\textcolor{orange!80!black}{\textbf{M:}} \texttt{onTimePct} and \texttt{maxTardiness}: completion vs.\ due date (planned $+$ lead time $+$ \SI{24}{h} grace). \newline
+\textcolor{orange!80!black}{\textbf{M:}} \texttt{onTimePct} and \texttt{maxTardiness}: completion vs.\ due date (planned $+$ \SI{332}{h} lead $+$ \SI{24}{h} grace; the \SI{332}{h} lead is the baseline maximum flow time, so baseline is on time by construction and any lateness reflects volume growth). \newline
 \textcolor{green!60!black}{\textbf{A:}} Evaluated at the ship event, not at release, so genuine lateness is captured. \newline
 \textcolor{blue!70!black}{\textbf{R:}} The case's one-day release constraint; tested under 2030 demand. \newline
 \textcolor{purple!70!black}{\textbf{T:}} Per batch, summarised per run. \\

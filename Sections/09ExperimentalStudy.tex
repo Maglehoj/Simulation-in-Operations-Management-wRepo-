@@ -95,9 +95,9 @@ estimate sits inside the noise band ($|t|<2$).}
 Table~\ref{tab:doe} and the Pareto in Figure~\ref{fig:doe} show that \emph{no
 effect is significant}: neither the three main effects (dryer, cleaning team,
 packaging) nor any interaction can be distinguished from zero, the largest being
-a $+454$-bottle packaging effect at $t=1.31$. The central result, which the OFAT
-design would have hidden, is that at the fixed 50-batch plan no capacity lever
-and no combination changes \emph{shipped output}, because output is fixed by
+a $+454$-bottle packaging effect at $t=1.31$. At the fixed 50-batch plan no
+capacity lever and no combination changes \emph{shipped output}, a result the
+single-lever OFAT screening would have hidden, because output is fixed by
 batches $\times$ per-batch yield, not by station capacity. Adding capacity moves
 the bottleneck (Sec.~\ref{sec:btshift}) but not the throughput. This conclusion
 is specific to the current order book: Section~\ref{sec:demand40} shows that once
@@ -203,9 +203,9 @@ but it does not absorb it gracefully. As the order book grows the single dryer
 saturates (\SI{94.3}{\percent} to \SI{96.8}{\percent}), and the queue in front of
 it drives \textbf{mean flow time from 179 to 338 h}, average WIP from 19 to 37,
 and \textbf{on-time delivery from \SI{100}{\percent} to \SI{54}{\percent}}
-(worst-case tardiness reaches 296 h at $N=100$). This is the concrete 2030
-answer: at current capacity the line meets higher demand only by letting lead
-times roughly double and service collapse (Figure~\ref{fig:volume}).
+(worst-case tardiness reaches 296 h at $N=100$). At current capacity the line
+meets higher 2030 demand only by letting lead times roughly double and service
+collapse (Figure~\ref{fig:volume}).
 
 \begin{figure}[H]
 \centering
@@ -217,7 +217,7 @@ to \SI{54}{\percent}.}
 \label{fig:volume}
 \end{figure}
 
-\paragraph{Which combination maximises performance?}
+\paragraph{Capacity combinations under volume growth.}
 Adding capacity at volume shifts the constraint but barely recovers service. At
 $N=100$ a second dryer relieves drying (\SI{96.8}{\percent} to \SI{85.3}{\percent})
 yet immediately saturates the shared cleaning team (\SI{97.5}{\percent}), because
@@ -240,8 +240,9 @@ throughput: 65{,}336 vs.\ 60{,}494 bottles, a gain of \textbf{4{,}842 bottles pe
 run} ($+\SI{8.0}{\percent}$, 95\% CI $[3{,}543,\,6{,}141]$). It is the only lever
 that significantly raises shipped output, where no capacity lever does, and it
 needs only the sensor retrofit, not added line capacity. The same yield gain
-carries to volume: at $N=100$ it adds about \SI{6}{\percent} more good bottles on
-top of the volume run.
+carries to volume: applied together with a second dryer at $N=100$
+(\texttt{dryer2\_batches100}), the scrap reduction lifts good bottles from
+\num{122448} to \num{130345}, a further \SI{6.4}{\percent}.
 
 \subsection{Managerial value: benefit vs.\ effort}
 \label{sec:value}

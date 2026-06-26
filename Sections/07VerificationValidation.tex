@@ -5,7 +5,7 @@ We verify and validate the model along the lines set out by
 Rossetti~\cite{rossetti2016}: first confirming it was built right, then that it
 is the right model of the line.
 
-\subsection{Verification (did we build the model right?)}
+\subsection{Verification (building the model right)}
 We checked the implementation in four ways. First, we traced a single batch
 through every block to confirm the routing, the coating bypass for CoreTab, and
 the seize and release of the \texttt{cleaningTeam}. Two degenerate runs then gave
@@ -14,7 +14,7 @@ product there are no changeovers. A conservation check confirms that the tablets
 entering equal the tablets bottled plus the tablets scrapped, and a mass balance
 confirms that bottles times bottle size never exceed \num{300000} per batch.
 
-\subsection{Validation and calibration (did we build the right model?)}
+\subsection{Validation and calibration (building the right model)}
 For validation we compare the model against analytic expectations. Drying carries
 the largest required machine-hours over the plan (about \SI{300}{h},
 Table~\ref{tab:capacity}), so it should be the binding constraint, ahead of the
