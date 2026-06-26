@@ -41,6 +41,11 @@ granulation Normal($\mu=1$, $\sigma=0.1$) h; compression \SI{2}{h}/batch;
 coating Triangular(1.5,2.0,2.5) h; packaging \SI{30000}{tablets/hour}.
 Failure inter-arrival: packaging Exponential(mean 4 h); premix old
 Weibull($\beta{=}2.5,\alpha{=}1.5$) days; premix new Weibull($\beta{=}3.5,\alpha{=}0.5$) days.
+The two repair distributions in Table~\ref{tab:fits} were fitted as the case
+requires, but the resource-pool breakdown mechanism records zero events in the
+runs, so they are documented for completeness and do not influence the reported
+results; premix failure enters the model only through the probabilistic
+batch-scrap.
 
 \begin{figure}[H]
 \centering

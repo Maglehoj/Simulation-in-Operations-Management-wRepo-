@@ -32,12 +32,12 @@ half-widths and the $n$ that Eq.~\eqref{eq:halfwidth} requires for each KPI.
 \toprule
 KPI & mean $\bar x$ & st.\ dev $s$ & half-width & rel.\ h-w & required $n$ \\
 \midrule
-Mean flow time (h)         & 182.3  & 6.93   & 3.24   & \SI{1.8}{\percent} & 3 \\
-Completion / makespan (h)  & 440.6  & 14.33  & 6.71   & \SI{1.5}{\percent} & 2 \\
-Throughput (bottles)       & 61{,}761 & 1{,}939 & 907 & \SI{1.5}{\percent} & 2 \\
-Avg.\ WIP (batches)        & 19.8   & 0.65   & 0.30   & \SI{1.5}{\percent} & 2 \\
-Dryer utilisation          & 0.949  & 0.006  & 0.003  & \SI{0.3}{\percent} & 1 \\
-Scrap rate                 & 0.051  & 0.031  & 0.015  & \SI{29}{\percent}  & 5\textsuperscript{*} \\
+Mean flow time (h)         & 179.4  & 6.95   & 3.25   & \SI{1.8}{\percent} & 3 \\
+Completion / makespan (h)  & 433.4  & 13.58  & 6.36   & \SI{1.5}{\percent} & 2 \\
+Throughput (bottles)       & 60{,}494 & 1{,}897 & 888 & \SI{1.5}{\percent} & 2 \\
+Avg.\ WIP (batches)        & 19.4   & 0.67   & 0.32   & \SI{1.6}{\percent} & 2 \\
+Dryer utilisation          & 0.943  & 0.009  & 0.004  & \SI{0.4}{\percent} & 1 \\
+Scrap rate                 & 0.070  & 0.029  & 0.013  & \SI{19}{\percent}  & 5\textsuperscript{*} \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -45,7 +45,7 @@ Scrap rate                 & 0.051  & 0.031  & 0.015  & \SI{29}{\percent}  & 5\t
 \noindent\textsuperscript{*}Scrap rate has a small mean, so a \SI{5}{\percent}
 \emph{relative} target is not meaningful; we instead size it on an \emph{absolute}
 half-width of $\pm 0.03$, which requires $n=5$. The achieved absolute half-width at
-$n=20$ is $\pm 0.015$ (i.e.\ $\pm 1.5$ percentage points).
+$n=20$ is $\pm 0.013$ (i.e.\ $\pm 1.3$ percentage points).
 
 \paragraph{Chosen replication count.}
 Every reported KPI needs at most five replications to reach the target precision, so
@@ -56,9 +56,8 @@ intervals on this basis.
 \paragraph{Resolving differences between scenarios.}
 For scenario comparisons the relevant precision is the confidence interval on the
 \emph{difference} from the baseline, not on a single mean. At $n=20$ this resolves
-the large effects (the Industry 4.0 scrap reduction, and the combined
-dryer-plus-cleaning-team configuration on flow time and makespan), while the effect
-of any single added machine on throughput falls below the detectable threshold. As
+the one large effect, the Industry 4.0 scrap reduction, while the effect of any
+single capacity change on throughput falls below the detectable threshold. As
 shown in Section~\ref{sec:experiments}, that non-detectability is itself a result:
 shipped volume is fixed by the 50-batch plan and per-batch yield, so adding one unit
 of capacity shifts the bottleneck and changes flow time and utilisation, but does not

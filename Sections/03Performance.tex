@@ -22,7 +22,7 @@ results in Sections~\ref{sec:output} and~\ref{sec:experiments}.
 \midrule
 
 \textbf{Weekly throughput}\newline
-\textcolor{gray}{\footnotesize Baseline: \num{61761} bottles} &
+\textcolor{gray}{\footnotesize Baseline: \num{60494} bottles} &
 \textcolor{red!70!black}{\textbf{S:}} Bottles shipped from the packaging lines. \newline
 \textcolor{orange!80!black}{\textbf{M:}} Counted at the sink via \texttt{bottlesShipped}. \newline
 \textcolor{green!60!black}{\textbf{A:}} Baseline sets the ceiling; improvements are compared to it. \newline
@@ -31,7 +31,7 @@ results in Sections~\ref{sec:output} and~\ref{sec:experiments}.
 \midrule
 
 \textbf{Station utilisation}\newline
-\textcolor{gray}{\footnotesize Baseline: dryer \SI{94.9}{\percent} (binding)} &
+\textcolor{gray}{\footnotesize Baseline: dryer \SI{94.3}{\percent} (binding)} &
 \textcolor{red!70!black}{\textbf{S:}} Busy share of drying, cleaning team and packaging. \newline
 \textcolor{orange!80!black}{\textbf{M:}} Busy hours over available hours, from the resource pools. \newline
 \textcolor{green!60!black}{\textbf{A:}} Read directly from AnyLogic each run. \newline
@@ -40,7 +40,7 @@ results in Sections~\ref{sec:output} and~\ref{sec:experiments}.
 \midrule
 
 \textbf{Flow time and WIP}\newline
-\textcolor{gray}{\footnotesize Baseline: \SI{182.3}{h} / 19.8 batches} &
+\textcolor{gray}{\footnotesize Baseline: \SI{179.4}{h} / 19.4 batches} &
 \textcolor{red!70!black}{\textbf{S:}} Time a batch spends in the line, and batches in process. \newline
 \textcolor{orange!80!black}{\textbf{M:}} \texttt{meanFlowTime} and \texttt{avgWIP}, linked by Little's Law. \newline
 \textcolor{green!60!black}{\textbf{A:}} Logged from agent entry and exit times. \newline
@@ -49,10 +49,10 @@ results in Sections~\ref{sec:output} and~\ref{sec:experiments}.
 \midrule
 
 \textbf{On-time delivery}\newline
-\textcolor{gray}{\footnotesize Baseline: \SI{100}{\percent} (max dev.\ \SI{18.5}{h})} &
-\textcolor{red!70!black}{\textbf{S:}} Share of batches shipped within one day of the planned date. \newline
-\textcolor{orange!80!black}{\textbf{M:}} \texttt{releaseViolations} and \texttt{maxReleaseDev} against the \SI{24}{h} rule. \newline
-\textcolor{green!60!black}{\textbf{A:}} Compared against the plan's release dates each run. \newline
+\textcolor{gray}{\footnotesize Baseline: \SI{100}{\percent} on time} &
+\textcolor{red!70!black}{\textbf{S:}} Share of batches shipped on or before their due date. \newline
+\textcolor{orange!80!black}{\textbf{M:}} \texttt{onTimePct} and \texttt{maxTardiness}: completion vs.\ due date (planned $+$ lead time $+$ \SI{24}{h} grace). \newline
+\textcolor{green!60!black}{\textbf{A:}} Evaluated at the ship event, not at release, so genuine lateness is captured. \newline
 \textcolor{blue!70!black}{\textbf{R:}} The case's one-day release constraint; tested under 2030 demand. \newline
 \textcolor{purple!70!black}{\textbf{T:}} Per batch, summarised per run. \\
 \midrule

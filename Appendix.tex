@@ -12,15 +12,15 @@
 
 \subsection*{Software artefacts}
 
-\textbf{AnyLogic model.} \texttt{FermaCore\_Replication\_Harness\_Brams\_testV2.0.alp}
+\textbf{AnyLogic model.} \texttt{FermaCore\_Replication\_Harness\_final.alp}
 is the model used for every result. It implements the full process flow
-(Sec.~\ref{sec:conceptual}), press scrap and a selectable dryer-queue rule
-(\texttt{queueStrategy}), machine downtime on the blenders and packaging lines,
-and a Parameter-Variation experiment (\texttt{ReplicationsExp}) that runs $n=20$
-replications and writes one KPI row per replication to CSV. A scenario is run by
-setting the \texttt{Main} parameters (e.g.\ \texttt{numDryers},
-\texttt{cleaningTeamCapacity}, \texttt{demandMultiplier}, \texttt{pressScrapRate})
-and re-running the experiment.
+(Sec.~\ref{sec:conceptual}), the press scrap, a selectable dryer-queue rule
+(\texttt{queueStrategy}) and a configurable order-book size
+(\texttt{targetBatchCount}), and a Parameter-Variation experiment
+(\texttt{ReplicationsExp}) that runs $n=20$ replications and writes one KPI row
+per replication to CSV. A scenario is run by setting the \texttt{Main} parameters
+(e.g.\ \texttt{numDryers}, \texttt{cleaningTeamCapacity}, \texttt{targetBatchCount},
+\texttt{pressScrapRate}) and re-running the experiment.
 
 \textbf{Analysis scripts (Python).}
 \begin{itemize}\setlength\itemsep{0pt}

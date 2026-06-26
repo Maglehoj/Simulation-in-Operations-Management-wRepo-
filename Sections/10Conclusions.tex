@@ -2,31 +2,36 @@
 \label{sec:conclusions}
 
 % ~0.75 page. Managerial takeaways, tied to the KPIs.
-The baseline identifies drying as the primary constraint, at \SI{94.9}{\percent}
+The baseline identifies drying as the primary constraint, at \SI{94.3}{\percent}
 utilisation and with the highest required unit-hours. The cleaning team is second
-at \SI{81.0}{\percent}, and packaging, although it has the largest absolute
-workload, is only third at \SI{53.0}{\percent} because it runs on three parallel
-lines. No capacity lever raises throughput. A second dryer relieves drying but
-moves the bottleneck onto the cleaning team (\SI{81.0}{\percent} to
-\SI{95.0}{\percent}), since each dryer adds a two-hour clean, and adding cleaning
-staff then pushes the constraint onto packaging. Shipped output stays at
-61{,}000--62{,}000 bottles in every case, because the volume is fixed by the
-50-batch plan and the per-batch yield, not by station capacity. The $2^3$
-factorial confirms this: no main effect is significant, and the single marginal
-interaction that crosses the threshold is a multiple-comparison artefact.
-Resequencing by product changes throughput by $-\SI{0.7}{\percent}$, which is not
-significant, and its only benefit is a small reduction in flow time.
+at \SI{79.6}{\percent}, and packaging, although it has the largest absolute
+workload, is only third at \SI{52.4}{\percent} because it runs on three parallel
+lines. At the current 50-batch order book no capacity lever raises throughput: a
+second dryer relieves drying but moves the bottleneck onto the cleaning team
+(\SI{79.6}{\percent} to \SI{95.0}{\percent}), since each dryer adds a two-hour
+clean, and adding cleaning staff then pushes the constraint onto packaging.
+Shipped output holds at \numrange{60000}{61000} bottles in every case, because
+volume is fixed by the plan and per-batch yield, not by station capacity; the
+$2^3$ factorial confirms that no effect, main or interaction, is significant.
 
-Towards 2030 the line absorbs demand compressed up to $\times2.0$ with zero
-release violations. Congestion grows, with flow time up \SI{11}{\percent} and WIP
-up \SI{12}{\percent}, but no unbounded backlog forms, and drying, not the
-schedule, is the resource that would bind first if the batch volume itself grew.
-The decisive lever is Industry~4.0. Predictive maintenance at the press, where
-sensors catch force or fill-depth drift before it scraps tablets, cuts scrap from
-\SI{10}{\percent} to \SI{4}{\percent} and raises shipped throughput by 3{,}551
-bottles per run
-($+\SI{5.8}{\percent}$, 95\% CI $[2{,}206,\,4{,}896]$), the only lever that
-significantly raises shipped output, and it needs only a one-off sensor
-retrofit with no added line capacity and no recurring cost. Our recommendation to
-management is therefore to defer the capital expansion that the 2030 plan was
-built around, and to invest instead in scrap reduction at the tablet press.
+Towards 2030 we grow the order book itself, to 75 and 100 batches. The line
+\emph{produces} the higher volume (60{,}494 to 123{,}496 bottles) but does not
+absorb it: the single dryer saturates (\SI{94.3}{\percent} to \SI{96.8}{\percent}),
+mean flow time roughly doubles (179 to 338 h), WIP nearly doubles, and on-time
+delivery collapses from \SI{100}{\percent} to \SI{54}{\percent}. Capacity additions
+at volume shift the constraint but barely recover service: a second dryer plus a
+larger cleaning team still leave the team near \SI{96}{\percent} and flow at 327 h.
+The dryer-and-clean coupling on the shared team is a structural limit that more
+machines relocate rather than remove; restoring 2030 service needs the dryer clean
+decoupled from the shared team (a dedicated or faster clean), not just one more
+machine.
+
+For shipped output the decisive lever is Industry~4.0. Predictive maintenance at
+the press, where sensors catch force or fill-depth drift before it scraps tablets,
+cuts scrap from \SI{10}{\percent} to \SI{4}{\percent} and raises throughput by
+4{,}842 bottles per run ($+\SI{8.0}{\percent}$, 95\% CI $[3{,}543,\,6{,}141]$),
+the only lever that does so and the cheapest, needing only a sensor retrofit. Our
+recommendation is therefore twofold: at today's volume, defer the line capital
+expansion and invest in the press-sensor scrap reduction; and before 2030 volume
+materialises, address the dryer-clean coupling directly, since simply adding a
+dryer only moves the bottleneck to the cleaning team.

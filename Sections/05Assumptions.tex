@@ -19,13 +19,11 @@ of 17 CoreTab, 18 PlusTab and 15 MaxTab.
 
 For routing and resources we make the following assumptions. Premix sends each
 batch to whichever unit, old or new, is free, and a failure during processing
-scraps the whole batch. The same premix failure frequency also drives blender
-downtime through the fitted repair time, so scrap and downtime are modelled as
-two independent effects rather than one coupled event. This slightly overstates
-premix disruption, but it does not affect the bottleneck, flow time or
-throughput, because the blenders run far below saturation
-($\approx\SI{20}{\percent}$ to \SI{30}{\percent} utilisation). CoreTab skips
-coating, while PlusTab and MaxTab are coated. Packaging is rate-based at \SI{30000}{tablets/hour} per line, and
+scraps the whole batch. Premix failure is represented solely through this
+probabilistic batch-scrap; the resource-pool breakdown/repair mechanism is
+configured but records zero repair events in every run, so the fitted repair
+distributions (\S\ref{sec:input}) are not exercised in the baseline and do not
+affect any result. CoreTab skips coating, while PlusTab and MaxTab are coated. Packaging is rate-based at \SI{30000}{tablets/hour} per line, and
 leftover tablets that cannot fill a full bottle are scrapped. One shared
 \texttt{cleaningTeam} of capacity one performs all cleaning, setup, changeover
 and repairs through a seize-delay-release logic, which is why these activities
